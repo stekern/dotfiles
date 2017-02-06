@@ -122,7 +122,7 @@ endif
 let g:tex_flavor = 'latex' " .tex files are usually written in LaTeX
 
 " Compile .tex and open corresponding .pdf when saving a .tex file
-autocmd BufWritePost *.tex silent exec '!(latexmk '.shellescape('%').' -pdf && open -g -a Skim --args '.shellescape('%:r').'.pdf) >/dev/null 2>&1' | redraw!
+autocmd BufWritePost *.tex silent exec '!(latexmk '.shellescape('%').' -pdf && open -g -a Skim '.shellescape('%:r').'.pdf) >/dev/null 2>&1' | redraw!
 
 " Auto compile and run .py files
 autocmd filetype python nnoremap <F5> :w <bar> exec '!python '.shellescape('%')<CR>
