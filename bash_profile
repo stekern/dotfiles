@@ -1,25 +1,4 @@
-alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-alias hideFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-
-alias disableDashboard='defaults write com.apple.dashboard mcx-disabled -boolean true; killall Dock /System/Library/CoreServices/Dock.app'
-alias enableDashboard='defaults write com.apple.dashboard mcx-disabled -boolean false; killall Dock /System/Library/CoreServices/Dock.app'
-
-alias disableMediaHotkey='launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist'
-alias enableMediaHotkey='launchctl load -w /System/Library/LaunchAgents/com.apple.rcd.plist'
-
-alias disableDesktop='defaults write com.apple.finder CreateDesktop false; killall Finder'
-alias enableDesktop='defaults write com.apple.finder CreateDesktop true; killall Finder'
-
-alias fuck='sudo $(history -p \!\!)'
-
-alias hivedl="python3 /Volumes/Macintosh\ HD/Users/Erlend/Downloads/Python/hivedl.py"
-alias karsnitt="python3 /Volumes/Macintosh\ HD/Users/Erlend/Downloads/Python/karaktersnitt.py"
-
-alias adbtools="cd /Volumes/Macintosh\ HD/Users/Erlend/Downloads/ADT/sdk/platform-tools"
-alias adb="/Volumes/Macintosh\ HD/Users/Erlend/Downloads/ADT/sdk/platform-tools/adb"
-alias fastboot="/Volumes/Macintosh\ HD/Users/Erlend/Downloads/ADT/sdk/platform-tools/fastboot"
-
-alias vim='/usr/local/bin/vim'
+alias vim='/usr/local/bin/nvim'
 
 # Disable duplicate commands in terminal history
 export HISTCONTROL=ignoreboth:erasedups
