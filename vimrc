@@ -1,67 +1,34 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+call plug#begin('~/.local/share/nvim/plugged')
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+Plug 'scrooloose/nerdtree'
+"Plug 'scrooloose/syntastic'
+Plug 'neomake/neomake'
+Plug 'aperezdc/vim-template'
+Plug 'LaTeX-Box-Team/LaTeX-Box' 
+Plug 'chriskempson/base16-vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-"Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Git plugin not hosted on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-Plugin 'ascenator/L9', {'name': 'newL9'}
-
-" All of your Plugins must be added before the following line
-" My plugins
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'aperezdc/vim-template'
-Plugin 'valloric/youcompleteme'
-Plugin 'LaTeX-Box-Team/LaTeX-Box'
-Plugin 'chriskempson/base16-vim'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'bling/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-fugitive'
-Plugin 'pangloss/vim-javascript'
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
-
-
-
-" * * * * * * * * * * * * * * * "
-
+call plug#end()
 
 
 " *** VIM SETTINGS ***
+
+" Uses base16-shell to help with theme compatibility in vim
+" First set 
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
+
+" Use shell transparency
+hi! Normal ctermbg=NONE guibg=NONE
+hi! NonText ctermbg=NONE guibg=NONE
+highlight Normal guibg=none
+highlight NonText guibg=none
 
 " General
 set clipboard=unnamed " Enables system clipboard (?)
@@ -74,8 +41,9 @@ set undodir=~/.vimundo/ " Set a directory to store the undo history
 set incsearch " Show the next match while entering a search
 set hlsearch " Highlighting search matches
 syntax on " Enable syntax
-colorscheme base16-google-dark
-set background=dark
+"colorscheme base16-google-dark
+"colorscheme base16-brewer
+"set background=dark
 set autochdir
 set encoding=utf-8
 
@@ -97,12 +65,15 @@ map <right> <nop>
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
-" Cycle through panes using TAB and autochange dir
-map <Tab> <C-w>w:cd %:p:h<CR>:<CR>
-
 " Change tabs using H and L
 nnoremap H gT
 nnoremap L gt
+
+" Move display lines instead of logical
+noremap  <buffer> <silent> k gk
+noremap  <buffer> <silent> j gj
+noremap  <buffer> <silent> 0 g0
+noremap  <buffer> <silent> $ g$
 
 " Indentation settings
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
@@ -112,21 +83,8 @@ autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype eruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 
-" Change cursor if running vim in iTerm
-if $TERM_PROGRAM =~ "iTerm"
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
-endif
-
 " Set default TeX flavor
 let g:tex_flavor = 'latex' " .tex files are usually written in LaTeX
-
-" Compile .tex and open corresponding .pdf when saving a .tex file
-autocmd BufWritePost *.tex silent exec '!(latexmk '.shellescape('%').' -pdf && open -g -a Skim '.shellescape('%:r').'.pdf) >/dev/null 2>&1' | redraw!
-
-" Auto compile and run .py files
-autocmd filetype python nnoremap <F5> :w <bar> exec '!python '.shellescape('%')<CR>
-
 
 " *** PLUGIN SETTINGS ***
 
@@ -136,7 +94,7 @@ autocmd filetype python nnoremap <F5> :w <bar> exec '!python '.shellescape('%')<
 " General
 let NERDTreeShowLineNumbers=1
 
-" Make it compatible with vim-template
+" Make NERDTree compatible with vim-template
 function! GetCurrentContent()
 let l:content = getline(0,line("$"))
 let l:result = 0
@@ -188,10 +146,39 @@ let g:email='dev@ekern.me'
 " ** vim-airline **
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='solarized'
+let g:airline_theme='base16_oceanicnext' " Matches base16-google-dark
 let g:airline_powerline_fonts = 1
 
+" ** deoplete ** 
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
-" ** YouCompleteMe **
-let g:ycm_server_use_vim_stdout = 0
-let g:ycm_server_python_interpreter = expand('~/.pyenv/shims/python')
+" ** neomake **
+" Run neomake on buffer buffer write
+"
+function! NeomakeESlintChecker()
+  let l:npm_bin = ''
+  let l:eslint = 'eslint'
+
+  if executable('npm')
+    let l:npm_bin = split(system('npm bin'), '\n')[0]
+  endif
+
+  if strlen(l:npm_bin) && executable(l:npm_bin . '/eslint')
+    let l:eslint = l:npm_bin . '/eslint'
+  endif
+
+  let b:neomake_javascript_eslint_exe = l:eslint
+endfunction
+
+autocmd FileType javascript :call NeomakeESlintChecker()
+
+autocmd! BufWritePost,BufReadPost * Neomake
+let g:python_host_prog='/home/erlend/.pyenv/versions/3.6.0/bin/python'
+let g:neomake_open_list=0
+"let g:neomake_javascript_enabled_makers = ['eslint']
+"let g:neomake_jsx_enabled_makers = ['eslint']
+"let g:neomake_logfile = '/home/erlend/neomake.log'
+"autocmd! BufWritePost * Neomake
+
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
