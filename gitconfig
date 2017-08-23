@@ -3,7 +3,7 @@
 	email = stekern@users.noreply.github.com
 
 [core]
-	editor = vim
+	editor = nvim
 	whitespace = fix
 
 [alias]
