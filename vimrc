@@ -1,51 +1,72 @@
-call plug#begin('~/.local/share/nvim/plugged')
+let vim_plug_path='~/.local/share/nvim/plugged'
 
-Plug 'scrooloose/nerdtree'
-"Plug 'scrooloose/syntastic'
-Plug 'neomake/neomake'
-Plug 'aperezdc/vim-template'
-Plug 'LaTeX-Box-Team/LaTeX-Box' 
+" Automatic vim-plug install on first launch
+if empty(glob(vim_plug_path))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin(vim_plug_path)
+
+Plug 'scrooloose/nerdtree' " File browser
+Plug 'neomake/neomake' " Linting and make framework
 Plug 'chriskempson/base16-vim'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'aperezdc/vim-template' " Template library for new files
+Plug 'LaTeX-Box-Team/LaTeX-Box'
+Plug 'ctrlpvim/ctrlp.vim' " Fuzzy file search
+Plug 'bling/vim-airline' " Statusline
+Plug 'vim-airline/vim-airline-themes' " Themes for the statusline
+Plug 'tpope/vim-fugitive' " Integration with git
+Plug 'tpope/vim-surround' "
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " Async autocomplete
+Plug 'wokalski/autocomplete-flow'
+" For func argument completion
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
 
 call plug#end()
 
 
 " *** VIM SETTINGS ***
 
-" Uses base16-shell to help with theme compatibility in vim
-" First set 
+
+" General
+syntax on " Enable syntax
+set clipboard+=unnamedplus
+set number " Enable line number
+set ruler " Enable ruler
+set backspace=indent,eol,start " Make backspaces better
+set showmatch " Show matching brackets
+set undofile " Enable undo file
+set undodir=~/.vimundo/ " Set directory to store undo history
+set incsearch " Show the next match while entering a search
+set hlsearch " Enable search Highlighting
+set autochdir
+set encoding=utf-8
+
+
+" Theming
+" Use base16-shell to help with theme compatibility in vim
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   source ~/.vimrc_background
 endif
 
-" Use shell transparency
-hi! Normal ctermbg=NONE guibg=NONE
-hi! NonText ctermbg=NONE guibg=NONE
-highlight Normal guibg=none
-highlight NonText guibg=none
+hi Normal guibg=NONE ctermbg=NONE " Enable terminal transparency in vim (must be set after syntax!)
 
-" General
-set clipboard=unnamed " Enables system clipboard (?)
-set number " Enable line number
-set ruler " Enable ruler
-set backspace=indent,eol,start " Make backspaces better
-set showmatch " Shows matching brackets
-set undofile " Tell it to use an undo file
-set undodir=~/.vimundo/ " Set a directory to store the undo history
-set incsearch " Show the next match while entering a search
-set hlsearch " Highlighting search matches
-syntax on " Enable syntax
-"colorscheme base16-google-dark
-"colorscheme base16-brewer
-"set background=dark
-set autochdir
-set encoding=utf-8
+let g:tex_flavor = 'latex' " Set default TeX flavor
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+
+" Indentation settings
+set expandtab " Allow tabs to be replaced by whitespace characters
+set shiftwidth=4 " Set default indentation
+autocmd Filetype html setlocal ts=2 sw=2 expandtab
+autocmd Filetype scss setlocal ts=2 sw=2 expandtab
+autocmd Filetype css setlocal ts=2 sw=2 expandtab
+autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
+autocmd Filetype eruby setlocal ts=2 sw=2 expandtab
+autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 
 " Clear highlighting on escape in normal mode
 nnoremap <esc> :noh<return><esc>
@@ -75,16 +96,7 @@ noremap  <buffer> <silent> j gj
 noremap  <buffer> <silent> 0 g0
 noremap  <buffer> <silent> $ g$
 
-" Indentation settings
-autocmd Filetype html setlocal ts=2 sw=2 expandtab
-autocmd Filetype scss setlocal ts=2 sw=2 expandtab
-autocmd Filetype css setlocal ts=2 sw=2 expandtab
-autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
-autocmd Filetype eruby setlocal ts=2 sw=2 expandtab
-autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 
-" Set default TeX flavor
-let g:tex_flavor = 'latex' " .tex files are usually written in LaTeX
 
 " *** PLUGIN SETTINGS ***
 
@@ -113,20 +125,6 @@ endfunction
 autocmd BufEnter * call GetCurrentContent()
 
 
-" ** Syntastic **
-
-" Recommended settings for Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-"let g:syntastic_python_checkers = ['pylint']
-
-
 " ** ctrlp.vim **
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_prompt_mappings = {
@@ -141,21 +139,31 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 
 " ** vim-template **
 let g:email='dev@ekern.me'
+let g:user='Erlend Ekern'
+
+let g:templates_user_variables = [
+        \   ['PYTHON_VERSION', 'GetDefaultPythonVersion'],
+        \ ]
+
+function! GetDefaultPythonVersion()
+        return 3
+endfunction
 
 
 " ** vim-airline **
-set laststatus=2
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='base16_oceanicnext' " Matches base16-google-dark
-let g:airline_powerline_fonts = 1
+set laststatus=2 " Always display statusline
+let g:airline#extensions#tabline#enabled = 1 " Enable top tabline
+let g:airline_theme='base16_oceanicnext' " Matches 'brewer' theme
+let g:airline_powerline_fonts = 1 " Enable powerline fonts
 
-" ** deoplete ** 
+
+" ** deoplete **
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
+
 " ** neomake **
-" Run neomake on buffer buffer write
-"
+
 function! NeomakeESlintChecker()
   let l:npm_bin = ''
   let l:eslint = 'eslint'
@@ -171,14 +179,14 @@ function! NeomakeESlintChecker()
   let b:neomake_javascript_eslint_exe = l:eslint
 endfunction
 
+" Run neomake on javascript buffer write
 autocmd FileType javascript :call NeomakeESlintChecker()
 
 autocmd! BufWritePost,BufReadPost * Neomake
-let g:python_host_prog='/home/erlend/.pyenv/versions/3.6.0/bin/python'
+"let g:python_host_prog='/home/erlend/.pyenv/versions/3.6.0/bin/python'
 let g:neomake_open_list=0
 "let g:neomake_javascript_enabled_makers = ['eslint']
 "let g:neomake_jsx_enabled_makers = ['eslint']
 "let g:neomake_logfile = '/home/erlend/neomake.log'
 "autocmd! BufWritePost * Neomake
 
-let g:jsx_ext_required = 0 " Allow JSX in normal JS files
