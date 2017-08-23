@@ -1,0 +1,15 @@
+[user]
+	name = stekern
+	email = stekern@users.noreply.github.com
+
+[core]
+	editor = nvim
+	whitespace = fix
+
+[alias]
+	b = branch
+	co = checkout
+	st = status
+
+[push]
+	default = current
