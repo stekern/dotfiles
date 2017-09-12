@@ -45,6 +45,7 @@ set hlsearch " Enable search Highlighting
 set autochdir
 set encoding=utf-8
 
+let mapleader = ',' " Set leader to ,
 
 " Theming
 " Use base16-shell to help with theme compatibility in vim
@@ -67,6 +68,20 @@ autocmd Filetype css setlocal ts=2 sw=2 expandtab
 autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype eruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
+
+" Leader commands
+nmap <silent> <leader>s :lopen<CR>
+nmap <silent> <leader>r :call GetDefaultRunCommand()<CR>
+function! GetDefaultRunCommand()
+    let l:run_commands = {
+        \ 'perl': 'perl',
+        \ 'python': 'python',
+        \ 'tex': 'pdflatex',
+        \}
+    if (has_key(l:run_commands, &ft))
+        execute ':term' l:run_commands[&ft] expand('%')
+    endif
+endfunction
 
 " Clear highlighting on escape in normal mode
 nnoremap <esc> :noh<return><esc>
