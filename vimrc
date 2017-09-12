@@ -177,7 +177,8 @@ let g:airline_powerline_fonts = 1 " Enable powerline fonts
 
 " ** deoplete **
 let g:deoplete#enable_at_startup = 1
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>" " Cycle forwards through suggestions with tab
+inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>" " Cycle backwards through suggestions with shift + tab
 
 
 " ** neomake **
