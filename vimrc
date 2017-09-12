@@ -183,6 +183,8 @@ inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>" " Cycle backwards th
 
 " ** neomake **
 
+let g:neomake_python_enabled_makers = ['pylint', 'pycodestyle', 'pydocstyle']
+
 function! NeomakeESlintChecker()
   let l:npm_bin = ''
   let l:eslint = 'eslint'
