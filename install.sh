@@ -28,6 +28,7 @@ sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt-get update
 sudo apt install neovim
 sudo apt install python-dev python-pip python3-dev python3-pip
+ln -s /usr/bin/nvim /usr/bin/vim ### TO do: Handle vim already installed
 
 ### To do: Add custom vim-templates etc. to repo
 
