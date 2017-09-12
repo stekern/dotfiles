@@ -83,6 +83,9 @@ function! GetDefaultRunCommand()
     endif
 endfunction
 
+" Map escape to exit terminal-mode
+:tnoremap <Esc> <C-\><C-n>
+
 " Clear highlighting on escape in normal mode
 nnoremap <esc> :noh<return><esc>
 nnoremap <esc>^[ <esc>^[
