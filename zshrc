@@ -128,10 +128,14 @@ function _tmux_template_options() {
 }
 compdef _tmux_template_options tmux-template
 
+# Add pyenv to path
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
 # Add flyway to path
 export PATH=$PATH:/opt/flyway/flyway-5.1.3
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change
 export PATH="$PATH:$HOME/.rvm/bin"
 
 # Do not log jrnl entries

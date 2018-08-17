@@ -6,7 +6,19 @@
 # Distributed under terms of the MIT license.
 #
 
-git clone https://github.com/stekern/dotfiles && cd dotfiles
+err_report() {
+  echo "errexit on line $(caller)" >&2
+}
+
+trap err_report ERR
+
+
+if [ "$(which git)" == "" ]; then
+    echo "[+] Installing git ..."
+    sudo apt install -y git
+fi
+
+git clone https://github.com/stekern/dotfiles && cd dotfiles && source ./zshrc
 
 DEFAULT_BASE16_THEME="base16-snazzy"
 
@@ -18,24 +30,36 @@ declare -A symlinks=(
     ["zshrc"]=~/.zshrc
 )
 
+echo "[+] Setting up symbolic links to dotfiles ..."
 for filename in "${!symlinks[@]}"; do
     file=$(realpath "$filename")
-    echo "ln -s $file ${symlinks[$filename]}"
-    # [ -f "$file" ] && echo ln -s "$file" "${symlinks[$filename]}"
+    [ -f "$file" ] && echo ln -s "$file" "${symlinks[$filename]}"
 done
-exit
 
-# Install oh-my-zsh
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 # Install neovim, tmux and python
-sudo add-apt-repository ppa:neovim-ppa/unstable
+echo "[+] Installing neovim and tmux ..."
+sudo add-apt-repository -y ppa:neovim-ppa/unstable
 sudo apt-get update
-sudo apt install neovim
-sudo apt install tmux
-sudo apt install python-dev python-pip python3-dev python3-pip
+sudo apt install -y neovim tmux
+
+# Install oh-my-zsh
+echo "[+] Installing oh-my-zsh ..."
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 # TODO: Set up pyenv, neovim-python, ...
+echo "[+] Installing pyenv ..."
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+#sudo apt install build-essential libffi-dev zlib1g-dev python-dev python-pip python3-dev python3-pip -y
+sudo apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+xz-utils tk-dev libffi-dev liblzma-dev
+pyenv install 3.7.0
+pyenv install 2.7.10
+pyenv global 3.7.0
+
+pip install virtualenv
+pip install virtualenvwrapper
 
 # Symlink or alias nvim to vim
 if [ -f /usr/bin/vim ]; then
@@ -49,16 +73,21 @@ fi
 
 
 # Install powerline fonts
+echo "[+] Installing powerline fonts ..."
 git clone https://github.com/powerline/fonts.git --depth=1 && cd fonts && ./install.sh && cd ..  && rm -rf fonts
 
 # Install base16-shell and set theme
+echo "[+] Installing base16-shell ..."
 if [ ! -d ~/.config/base16-shell ]; then
     git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
     (source ~/.zshrc)
     ~/.config/base16-shell/scripts/$DEFAULT_BASE16_THEME.sh
 fi
 
+exit
+
 # Install base-16-gnome-terminal
+echo "[+] Installing base-16-gnome-terminal ..."
 if [ ! -d ~/.config/base16-gnome-terminal ]; then
     git clone https://github.com/chriskempson/base16-gnome-terminal.git ~/.config/base16-gnome-terminal
 
