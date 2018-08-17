@@ -2,7 +2,7 @@ let vim_plug_path='~/.local/share/nvim/plugged'
 
 " Automatic vim-plug install on first launch
 if empty(glob(vim_plug_path))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
