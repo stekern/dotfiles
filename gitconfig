@@ -10,6 +10,7 @@
 	b = branch
 	co = checkout
 	st = status
+        ap = add --patch
 
 [push]
 	default = current
