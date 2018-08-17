@@ -18,7 +18,7 @@ if [ "$(which git)" == "" ]; then
     sudo apt install -y git
 fi
 
-git clone https://github.com/stekern/dotfiles && cd dotfiles && source ./zshrc
+git clone https://github.com/stekern/dotfiles && cd dotfiles && source zshrc
 
 DEFAULT_BASE16_THEME="base16-snazzy"
 
@@ -33,7 +33,7 @@ declare -A symlinks=(
 echo "[+] Setting up symbolic links to dotfiles ..."
 for filename in "${!symlinks[@]}"; do
     file=$(realpath "$filename")
-    [ -f "$file" ] && echo ln -s "$file" "${symlinks[$filename]}"
+    [ -f "$file" ] && ln -s "$file" "${symlinks[$filename]}"
 done
 
 
@@ -45,6 +45,8 @@ sudo apt install -y neovim tmux
 
 # Install oh-my-zsh
 echo "[+] Installing oh-my-zsh ..."
+sudo apt install -y zsh
+chsh -s $(which zsh)
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 # TODO: Set up pyenv, neovim-python, ...
@@ -54,18 +56,22 @@ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 sudo apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
 libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
 xz-utils tk-dev libffi-dev liblzma-dev
-pyenv install 3.7.0
-pyenv install 2.7.10
-pyenv global 3.7.0
+echo "[+] Installing Python 3.7.0 ..."
+~/.pyenv/bin/pyenv install 3.7.0
+echo "[+] Installing Python 2.7.10 ..."
+~/.pyenv/bin/pyenv install 2.7.10
+~/.pyenv/bin/pyenv global 3.7.0
 
-pip install virtualenv
-pip install virtualenvwrapper
+echo "[+] Installing misc. Python packages ..."
+~/.pyenv/shims/pip3.7 install virtualenv
+~/.pyenv/shims/pip3.7 install virtualenvwrapper
+~/.pyenv/shims/pip3.7 install neovim
 
 # Symlink or alias nvim to vim
-if [ -f /usr/bin/vim ]; then
+if [ "$(which vim)" == "" ]; then
     alias vim="nvim"
 else
-    ln -s /usr/bin/nvim /usr/bin/vim
+    sudo ln -s /usr/bin/nvim /usr/bin/vim
 fi
 
 
