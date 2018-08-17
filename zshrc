@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/erlend/.oh-my-zsh
+export ZSH=/home/erlend/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -51,7 +51,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -73,7 +73,7 @@ source $ZSH/oh-my-zsh.sh
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -83,12 +83,23 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+
+# Diable vi-mode translating shift-tab to esc. 
+bindkey '^[[Z' reverse-menu-complete
 
 alias vim="nvim"
 alias rosvm='vboxmanage startvm "ROS-Indigo" --type sdl'
+alias day="base16_harmonic-light"
+alias night="base16_harmonic-dark"
+
 
 if [ -e ~/Documents/GitHub/Python/ntnu-gpa-calculator/gpa_fetcher.py ]; then
     alias gpa=~/Documents/GitHub/Python/ntnu-gpa-calculator/gpa_fetcher.py
+fi
+
+if [ -e ~/Documents/GitHub/Python/livingelectro-player/main.py ]; then
+    alias livingelectro=~/Documents/GitHub/Python/livingelectro-player/main.py
 fi
 
 BASE16_SHELL=$HOME/.config/base16-shell/
@@ -97,18 +108,7 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-# Load pyenv automatically
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-# Mac keyboard shortcuts
-xmodmap -e "keycode 13 = 4 dollar 4 currency dollar onequarter"
-xmodmap -e "keycode 16 = 7 slash 7 slash braceleft backslash"
-xmodmap -e "keycode 17 = 8 parenleft 8 8 bracketleft braceleft"
-xmodmap -e "keycode 18 = 9 parenright 8 8 bracketright braceright"
+export PATH="$PATH:$(yarn global bin)"
 
 # Create and go to dir
 mkcdir () {
@@ -116,7 +116,58 @@ mkcdir () {
         cd -P -- "$1"
 }
 
-# Go to home directory
-gh () {
-    cd ~
+# Wrap tmux-template script in a function for compatibility with autocompletion
+function tmux-template() {
+    bash ~/Documents/GitHub/Scripts/tmux-sessions/tmux-template.sh $*
 }
+# Set up autocomplete for tmux-template
+function _tmux_template_options() {
+    local -a options
+    options=('capra' 'easybudget')
+    _describe 'values' options
+}
+compdef _tmux_template_options tmux-template
+
+# Add flyway to path
+export PATH=$PATH:/opt/flyway/flyway-5.1.3
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+# Do not log jrnl entries
+setopt HIST_IGNORE_SPACE
+alias jrnl=" jrnl"
+
+function log_question()
+{
+   echo $1
+   read
+   jrnl today: ${1}. $REPLY
+}
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .cache/ --ignore node_modules/ --ignore .git -g ""'
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+
+# https://medium.com/@henriquebastos/the-definitive-guide-to-setup-my-python-workspace-628d68552e14
+export WORKON_HOME=~/.ve
+export PROJECT_HOME=~/pyworkspace
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+pyenv virtualenvwrapper_lazy
+
+# Remap keys on Logitech K811 bluetooth keyboard to match Thinkpad T460 keyboard
+function setup_custom_bluetooth_keyboard() {
+    local keyboard_id=$(xinput | egrep 'Logitech K811' | sed -r 's/^.*id=([0-9]+).*/\1/g')
+    if [[ $keyboard_id =~ [0-9]+ ]]; then
+        xkbcomp -i $keyboard_id ~/dotfiles/k811.xkb -synch $DISPLAY &>/dev/null && xdotool key Ctrl
+    fi
+}
+#setup_custom_bluetooth_keyboard
+
+# Mac keyboard shortcuts
+xmodmap -e "keycode 13 = 4 dollar 4 currency dollar onequarter"
+xmodmap -e "keycode 16 = 7 slash 7 slash braceleft backslash"
+xmodmap -e "keycode 17 = 8 parenleft 8 8 bracketleft braceleft"
+xmodmap -e "keycode 18 = 9 parenright 8 8 bracketright braceright"
