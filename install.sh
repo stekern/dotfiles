@@ -33,7 +33,7 @@ declare -A symlinks=(
 echo "[+] Setting up symbolic links to dotfiles ..."
 for filename in "${!symlinks[@]}"; do
     file=$(realpath "$filename")
-    [ -f "$file" ] && ln -s "$file" "${symlinks[$filename]}"
+    [ -f "$file" ] && mkdir -p "${symlinks[$filename]}" && ln -s "$file" "${symlinks[$filename]}"
 done
 
 
@@ -45,9 +45,7 @@ sudo apt install -y neovim tmux
 
 # Install oh-my-zsh
 echo "[+] Installing oh-my-zsh ..."
-sudo apt install -y zsh
-chsh -s $(which zsh)
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+sudo apt install -y zsh && chsh -s $(which zsh) && bash -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 # TODO: Set up pyenv, neovim-python, ...
 echo "[+] Installing pyenv ..."
