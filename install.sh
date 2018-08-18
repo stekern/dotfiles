@@ -18,8 +18,8 @@ fi
 
 # Clone dotfiles repo
 if [ ! -d ~/dotfiles ]; then
-    git clone https://github.com/stekern/dotfiles &>>$LOG_FILE
-    cd dotfiles
+    git clone https://github.com/stekern/dotfiles ~/dotfiles &>>$LOG_FILE
+    cd ~/dotfiles
 else
     echo "[-] Directory ~/dotfiles/ already exists! Exiting ..."
     exit 1
