@@ -30,7 +30,9 @@ echo "[+] Installing necessary packages from apt  ..."
 (
     sudo add-apt-repository -y ppa:neovim-ppa/unstable
     sudo apt-get update
-    sudo apt install -y neovim tmux zsh make build-essential libssl-dev zlib1g-dev libbz2-dev \
+    sudo apt install -y neovim tmux xclip zsh
+    # pyenv requirements
+    sudo apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
     libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
     xz-utils tk-dev libffi-dev liblzma-dev
 ) &>>$LOG_FILE
