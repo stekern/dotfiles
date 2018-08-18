@@ -111,10 +111,10 @@ for filename in "${!symlinks[@]}"; do
     file=$(realpath "$filename")
 
     if [ -f "${symlinks[$filename]}" ]; then
-        mv "${symlinks[$filename]}" "${symlinks[$filename]}.$TIMESTAMP.old" &>>$LOG_FILE
+        mv "${symlinks[$filename]}" "${symlinks[$filename]}.$TIMESTAMP.old"
     fi
 
-    ( [ -f "$file" ] && mkdir -p "$(dirname ${symlinks[$filename]})" && ln -s "$file" "${symlinks[$filename]}" ) &>>$LOG_FILE
+    [ -f "$file" ] && mkdir -p "$(dirname ${symlinks[$filename]})" && ln -s "$file" "${symlinks[$filename]}"
 done
 
 env zsh -l
