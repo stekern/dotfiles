@@ -122,7 +122,13 @@ for filename in "${!symlinks[@]}"; do
     ) &>>$LOG_FILE
 done
 
+echo "\n------------------------------------\n"
+echo "Installation of dotfiles has successfully finished!"
+echo "You can view the installation log at: $LOG_FILE"
+echo "\n------------------------------------\n"
+
 env zsh -l
+
 
 exit
 
