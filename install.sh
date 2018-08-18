@@ -123,4 +123,4 @@
             dconf write $profile_dir/font "'Source Code Pro for Powerline Regular 11'"
         fi
     fi
-} &>~/log_dotfiles_installation_$(date + %s).txt
+} &>~/log_dotfiles_installation_$(date +%s).txt
