@@ -48,6 +48,8 @@ fi
 if [ ! -d ~/.nvm ]; then
     echo "[+] Installing nvm ..."
     ( curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash ) &>>$LOG_FILE
+    source zshrc &>>$LOG_FILE
+    nvm install --lts &>>$LOG_FILE
 fi
 
 # TODO: Set up pyenv, neovim-python, ...
