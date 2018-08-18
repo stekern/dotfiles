@@ -59,19 +59,19 @@ if [ ! -d ~/.pyenv/plugins/pyenv-virtualenv ]; then
     git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv &>$LOG_FILE
 fi
 
-if [ ! -d ~/.pyenv/plugins/pyenv-virtualenvwrapper ]; then
+if [ ! -d ~/.pyenv/plugins/pyenv-virtualenvwrapper ]; then
     echo "[+] Installing pyenv-virtualenvwrapper ..."
     git clone https://github.com/pyenv/pyenv-virtualenvwrapper.git ~/.pyenv/plugins/pyenv-virtualenvwrapper &>$LOG_FILE
 fi
 
 has_python3=$(~/.pyenv/bin/pyenv versions | egrep '3.7.0' | wc -l)
-if [ $has_python3 -eq  0]; then
+if [ $has_python3 -eq 0 ]; then
     echo "[+] Installing Python 3.7.0 ..."
     ~/.pyenv/bin/pyenv install 3.7.0 &>$LOG_FILE
 fi
 
 has_python2=$(~/.pyenv/bin/pyenv versions | egrep '2.7.13' | wc -l)
-if [ $has_python2 -eq 0 ]; then
+if [ $has_python2 -eq 0 ]; then
     echo "[+] Installing Python 2.7.13 ..."
     ~/.pyenv/bin/pyenv install 2.7.13 &>$LOG_FILE
 fi
@@ -108,15 +108,13 @@ declare -A symlinks=(
 
 echo "[+] Setting up symbolic links to dotfiles ..."
 for filename in "${!symlinks[@]}"; do
-    (
-        file=$(realpath "$filename")
+    file=$(realpath "$filename")
 
-        if [ -f "${symlinks[$filename]}" ]; then
-            mv "${symlinks[$filename]}" "${symlinks[$filename]}.$TIMESTAMP.old"
-        fi
+    if [ -f "${symlinks[$filename]}" ]; then
+        mv "${symlinks[$filename]}" "${symlinks[$filename]}.$TIMESTAMP.old" &>$LOG_FILE
+    fi
 
-        [ -f "$file" ] && mkdir -p "$(dirname ${symlinks[$filename]})" && ln -s "$file" "${symlinks[$filename]}"
-    ) &>$LOG_FILE
+    ( [ -f "$file" ] && mkdir -p "$(dirname ${symlinks[$filename]})" && ln -s "$file" "${symlinks[$filename]}" ) &>$LOG_FILE
 done
 
 env zsh -l
