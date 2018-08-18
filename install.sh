@@ -39,7 +39,7 @@ echo "[+] Installing necessary packages from apt  ..."
 if [ ! -d ~/.oh-my-zsh ]; then
     echo "[+] Installing oh-my-zsh ..."
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sed -r 's/(^\s*)(env zsh -l)(\s*$)/\1#\2\3/g' | sed -r 's/(^\s*)(chsh -s .*)(\s*)$/\1#\2\3/g')" &>$LOG_FILE
-    chsh -s $(which zsh) 2>$LOG_FILE
+    chsh -s $(which zsh) 2>&1 | tee -a $LOG_FILE
 fi
 
 # Install nvm
