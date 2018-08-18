@@ -18,7 +18,8 @@ fi
 
 # Clone dotfiles repo
 if [ ! -d ~/dotfiles ]; then
-    ( git clone https://github.com/stekern/dotfiles && cd dotfiles ) &>>$LOG_FILE
+    git clone https://github.com/stekern/dotfiles &>>$LOG_FILE
+    cd dotfiles
 else
     echo "[-] Directory ~/dotfiles/ already exists! Exiting ..."
     exit 1
@@ -108,13 +109,15 @@ declare -A symlinks=(
 
 echo "[+] Setting up symbolic links to dotfiles ..."
 for filename in "${!symlinks[@]}"; do
-    file=$(realpath "$filename")
+    (
+        file=$(realpath "$filename")
 
-    if [ -f "${symlinks[$filename]}" ]; then
-        mv "${symlinks[$filename]}" "${symlinks[$filename]}.$TIMESTAMP.old"
-    fi
+        if [ -f "${symlinks[$filename]}" ]; then
+            mv "${symlinks[$filename]}" "${symlinks[$filename]}.$TIMESTAMP.old"
+        fi
 
-    [ -f "$file" ] && mkdir -p "$(dirname ${symlinks[$filename]})" && ln -s "$file" "${symlinks[$filename]}"
+        [ -f "$file" ] && mkdir -p "$(dirname ${symlinks[$filename]})" && ln -s "$file" "${symlinks[$filename]}"
+    ) &>>$LOG_FILE
 done
 
 env zsh -l
