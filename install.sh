@@ -36,6 +36,7 @@ echo "[+] Installing necessary packages from apt  ..."
 ) &>>$LOG_FILE
 
 
+
 # Install oh-my-zsh
 if [ ! -d ~/.oh-my-zsh ]; then
     echo "[+] Installing oh-my-zsh ..."
@@ -109,7 +110,7 @@ declare -A symlinks=(
     ["zshrc"]=~/.zshrc
 )
 
-echo "[+] Setting up symbolic links to dotfiles ..."
+echo "[+] Setting up symbolic links ..."
 for filename in "${!symlinks[@]}"; do
     (
         file=$(realpath "$filename")
@@ -121,6 +122,10 @@ for filename in "${!symlinks[@]}"; do
         [ -f "$file" ] && mkdir -p "$(dirname ${symlinks[$filename]})" && ln -s "$file" "${symlinks[$filename]}"
     ) &>>$LOG_FILE
 done
+
+if [ $(which vim) == "" ]; then
+    sudo ln -s /usr/bin/nvim /usr/bin/vim
+fi
 
 echo "\n------------------------------------\n"
 echo "Installation of dotfiles has successfully finished!"
