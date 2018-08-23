@@ -13,22 +13,22 @@ highlight ALEWarning ctermbg=none cterm=underline " Hightlight warning position 
 let g:ale_sign_error = '🚨' " Set custom error sign
 let g:ale_sign_warning = '⚠' " Set custom warning sign
 highlight ALEErrorSign ctermbg=18 ctermfg=red " ctermbg is set to current colour of SignColumn
-highlight ALEWarningSign ctermbg=18 ctermfg=yellow" ctermbg is set to current colour of SignColum
+highlight ALEWarningSign ctermbg=18 ctermfg=yellow" ctermbg is set to current colour of SignColumn
 
 
 " === fzf ===
 nnoremap <silent> <leader>fb :Buffers<CR>
 nnoremap <silent> <leader>fc :Commits<CR>
 nnoremap <silent> <leader>ff :Files<CR>
-nnoremap <silent> <leader>fbl :Lines<CR>
+nnoremap <silent> <leader>flb :Lines<CR>
 nnoremap <silent> <leader>fl :Ag<CR>
 
 " Default key bindings when opening files
-let g:fzf_action = {
-  \ 'enter': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
-let g:fzf_layout = { 'down': '~30%' } " Default layout of the search window
+"let g:fzf_action = {
+"  \ 'enter': 'tab split',
+"  \ 'ctrl-x': 'split',
+"  \ 'ctrl-v': 'vsplit' }
+let g:fzf_layout = { 'down': '~40%' } " Default layout of the search window
 
 " Customize fzf colors to match color scheme
 let g:fzf_colors =
