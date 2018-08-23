@@ -90,6 +90,9 @@ noremap  <buffer> <silent> 0 g0
 noremap  <buffer> <silent> $ g$
 
 let g:session_dir = '~/.vim-sessions'
+if empty(glob(g:session_dir))
+    silent exec '!mkdir' g:session_dir
+endif
 exec 'nnoremap <Leader>ss :mks! ' . g:session_dir . '/'
 exec 'nnoremap <Leader>sr :so ' . g:session_dir. '/*.vim<C-D><BS><BS><BS><BS><BS>'
 
