@@ -4,7 +4,7 @@ set clipboard+=unnamedplus
 set number " Enable line numbers
 set relativenumber " Enable relative line numbers
 set ruler " Enable ruler
-set backspace=indent,eol,start " Make backspaces better
+"set backspace=indent,eol,start " Make backspaces better
 set showmatch " Show matching brackets
 set undofile " Enable undo file
 set undodir=~/.vimundo/ " Set directory to store undo history
@@ -12,6 +12,11 @@ set incsearch " Show the next match while entering a search
 set hlsearch " Enable search highlighting
 set autochdir
 set encoding=utf-8
+set splitright " Add new windows split to the right
+
+" Cycle through windows using <Tab> and <Shift-Tab>
+nnoremap <Tab> <c-w>w
+nnoremap <S-Tab> <c-w>W
 
 let mapleader = ' ' " Set leader to <SPACE>
 
