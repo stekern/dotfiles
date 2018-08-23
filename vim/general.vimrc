@@ -96,9 +96,26 @@ endif
 exec 'nnoremap <Leader>ss :mks! ' . g:session_dir . '/'
 exec 'nnoremap <Leader>sr :so ' . g:session_dir. '/*.vim<C-D><BS><BS><BS><BS><BS>'
 
-function! SessionName()
-  call inputsave()
-  let name = input('Save session as: ')
-  echo name
-  call inputrestore()
+function ToggleLexplore()
+    " Check if Lexplore has been called at some point in time
+    if exists("t:netrw_lexbufnr")
+        " Go to left-most window
+        exec 1 "wincmd w"
+        setlocal winfixwidth
+        " Check if active window is netrw
+        if bufname('%') =~ "NetrwTreeListing"
+            let t:netrw_lexbufnr = bufnr("%")
+            close
+        else
+            exec "topleft vertical ". (-g:netrw_winsize) . " new | buffer " t:netrw_lexbufnr
+            "exec "leftabove 30vsplit | buffer " t:netrw_lexbufnr
+        endif
+    else
+        Lexplore
+    endif
 endfunction
+
+nmap <silent> <leader>e :silent Explore<CR>
+
+let g:netrw_winsize = -30
+let g:netrw_liststyle = 3 " Enable tree-style filebrowsing
