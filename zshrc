@@ -89,6 +89,7 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 bindkey '^[[Z' reverse-menu-complete
 
 alias vim="nvim"
+alias egrep="egrep --color"
 alias rosvm='vboxmanage startvm "ROS-Indigo" --type sdl'
 alias day="base16_harmonic-light"
 alias night="base16_harmonic-dark"
@@ -110,20 +111,24 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-export PATH="$PATH:$(yarn global bin)"
+
+# Add global yarn binary to PATH if it exists
+if which yarn &> /dev/null; then
+    export PATH="$PATH:$(yarn global bin)"
+fi
 
 # Create and go to dir
-mkcdir () {
+function mkcdir {
     mkdir -p -- "$1" &&
         cd -P -- "$1"
 }
 
 # Wrap tmux-template script in a function for compatibility with autocompletion
-function tmux-template() {
+function tmux-template {
     bash ~/Documents/GitHub/Scripts/tmux-sessions/tmux-template.sh $*
 }
 # Set up autocomplete for tmux-template
-function _tmux_template_options() {
+function _tmux_template_options {
     local -a options
     options=('capra' 'easybudget')
     _describe 'values' options
@@ -144,8 +149,7 @@ export PATH="$PATH:$HOME/.rvm/bin"
 setopt HIST_IGNORE_SPACE
 alias jrnl=" jrnl"
 
-function log_question()
-{
+function log_question {
    echo $1
    read
    jrnl today: ${1}. $REPLY
@@ -164,7 +168,7 @@ eval "$(pyenv virtualenv-init -)"
 pyenv virtualenvwrapper_lazy
 
 # Remap keys on Logitech K811 bluetooth keyboard to match Thinkpad T460 keyboard
-function setup_custom_bluetooth_keyboard() {
+function setup_custom_bluetooth_keyboard {
     local keyboard_id=$(xinput | egrep 'Logitech K811' | sed -r 's/^.*id=([0-9]+).*/\1/g')
     if [[ $keyboard_id =~ [0-9]+ ]]; then
         xkbcomp -i $keyboard_id ~/dotfiles/k811.xkb -synch $DISPLAY &>/dev/null && xdotool key Ctrl
