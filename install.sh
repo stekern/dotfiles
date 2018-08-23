@@ -10,14 +10,39 @@ set -e
 TIMESTAMP=$(date +%s)
 LOG_FILE=~/log_dotfiles_installation_$TIMESTAMP.txt
 
-# Install git
-if [ "$(which git)" == "" ]; then
-    echo "[+] Installing git ..."
-    ( sudo apt install -y git ) &>$LOG_FILE
-fi
+
+function confirm {
+    while true; do
+        read -p "$1" yn
+        case $yn in
+            [yY]* ) return 0;;
+            [nN]* ) return 1;;
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
+}
+
+function symlink {
+    (
+        file=$(realpath "$1")
+
+        if [ -f "$2" ]; then
+            mv "$2" "$2.$TIMESTAMP.old"
+        fi
+
+        [ -f "$file" ] && mkdir -p "$(dirname $2)" && sudo ln -s "$file" "$2"
+    ) &>>$LOG_FILE
+}
+
+
 
 # Clone dotfiles repo
 if [ ! -d ~/dotfiles ]; then
+    # Install git
+    if [ "$(which git)" == "" ]; then
+        echo "[+] Installing git ..."
+        sudo apt install -y git &>>$LOG_FILE
+    fi
     git clone https://github.com/stekern/dotfiles ~/dotfiles &>>$LOG_FILE
     cd ~/dotfiles
 else
