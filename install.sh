@@ -50,8 +50,46 @@ else
     exit 1
 fi
 
-# Install neovim and tmu
-echo "[+] Installing necessary packages from apt  ..."
+if confirm "Would you like to install albert, Spotify and misc. media packages? "; then
+    echo "[+] Installing albert, Spotify and misc. media packages ..."
+    (
+        # Add repository for albert
+        sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/manuelschneid3r/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/home:manuelschneid3r.list"
+        # Add signing keys for Spotify repository
+        sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
+        # Add repository for Spotify
+        echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
+        sudo apt update
+        sudo apt install albert spotify-client ubuntu-restricted-extras
+        # Install necessary libraries for Spotify local files
+        sudo wget -N https://github.com/ramedeiros/spotify_libraries/raw/master/libavcodec.so.54.71.100 -O /usr/lib/x86_64-linux-gnu/libavcodec.so.54 && sudo wget -N https://github.com/ramedeiros/spotify_libraries/raw/master/libavformat.so.54.36.100 -O /usr/lib/x86_64-linux-gnu/libavformat.so.54 && sudo wget -N https://github.com/ramedeiros/spotify_libraries/raw/master/libavutil.so.52.6.100 -O /usr/lib/x86_64-linux-gnu/libavutil.so.52 && sudo ldconfig
+    ) &>>$LOG_FILE
+fi
+
+if confirm "Would you like to install htop, tldr and tlp? "; then
+    echo "[+] Installing htop, tldr and tlp ..."
+    sudo apt install htop tldr tlp &>>$LOG_FILE
+fi
+
+if confirm "Would you like to configure misc. ThinkPad T460 tweaks? "; then
+    echo "[+] Configuring misc. ThinkPad T460 tweaks ..."
+    (
+        # Map <Ctrl>+Volume keys to media prev, play, next
+        gsettings set org.gnome.settings-daemon.plugins.media-keys play "<Ctrl>XF86AudioLowerVolume"
+        gsettings set org.gnome.settings-daemon.plugins.media-keys previous "<Ctrl>XF86AudioMute"
+        gsettings set org.gnome.settings-daemon.plugins.media-keys next "<Ctrl>XF86AudioRaiseVolume"
+
+        # Swap <CapsLock> and <Esc>
+        gsettings set org.gnome.desktop.input-sources xkb-options "['caps:swapescape']"
+
+        # symlink "./thinkpad/10-trackpoint.rules" "/etc/udev/rules.d/10-trackpoint.rules"
+        # xinput --set-prop "TPPS/2 IBM TrackPoint" "libinput Natural Scrolling Enabled" 1
+        # xinput --set-prop "TPPS/2 IBM TrackPoint" "libinput Accel Speed" "-0.40"
+    ) &>>$LOG_FILE
+fi
+
+# Install neovim, tmux and zsh
+echo "[+] Installing neovim (+silversearcher-ag), tmux (+xclip) and zsh ..."
 (
     sudo add-apt-repository -y ppa:neovim-ppa/unstable
     sudo apt-get update
