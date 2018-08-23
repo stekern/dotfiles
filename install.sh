@@ -92,17 +92,11 @@ fi
 echo "[+] Installing neovim (+silversearcher-ag), tmux (+xclip) and zsh ..."
 (
     sudo add-apt-repository -y ppa:neovim-ppa/unstable
-    sudo apt-get update
-    # Main installations
+    sudo apt update
     sudo apt install -y neovim tmux zsh
-    # Additional installations
+    # Additional installations for neovim and tmux
     sudo apt install -y xclip silversearcher-ag
-    # pyenv requirements
-    sudo apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
-    libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-    xz-utils tk-dev libffi-dev liblzma-dev
 ) &>>$LOG_FILE
-
 
 
 # Install oh-my-zsh
@@ -117,11 +111,18 @@ if [ ! -d ~/.nvm ]; then
     echo "[+] Installing nvm ..."
     ( curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash ) &>>$LOG_FILE
     source ~/.nvm/nvm.sh &>>$LOG_FILE
+    echo "[+] Installing latest LTS version of Node.js ..."
     nvm install --lts &>>$LOG_FILE
 fi
 
 # TODO: Set up pyenv, neovim-python, ...
 if [ ! -d ~/.pyenv ]; then
+    # Install dependencies for pyenv
+    echo "[+] Installing dependencies for pyenv ..."
+    sudo apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+    libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+    xz-utils tk-dev libffi-dev liblzma-dev &>>$LOG_FILE
+
     echo "[+] Installing pyenv ..."
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv &>>$LOG_FILE
 fi
@@ -182,30 +183,12 @@ declare -A symlinks=(
 
 echo "[+] Setting up symbolic links ..."
 for filename in "${!symlinks[@]}"; do
-    (
-        file=$(realpath "$filename")
-
-        if [ -f "${symlinks[$filename]}" ]; then
-            mv "${symlinks[$filename]}" "${symlinks[$filename]}.$TIMESTAMP.old"
-        fi
-
-        [ -f "$file" ] && mkdir -p "$(dirname ${symlinks[$filename]})" && ln -s "$file" "${symlinks[$filename]}"
-    ) &>>$LOG_FILE
+    symlink "$filename" "${symlinks[$filename]}"
 done
 
 if [ $(which vim) == "" ]; then
     sudo ln -s /usr/bin/nvim /usr/bin/vim
 fi
-
-echo "\n------------------------------------\n"
-echo "Installation of dotfiles has successfully finished!"
-echo "You can view the installation log at: $LOG_FILE"
-echo "\n------------------------------------\n"
-
-env zsh -l
-
-
-exit
 
 # Install base-16-gnome-terminal
 echo "[+] Installing base-16-gnome-terminal ..."
@@ -213,17 +196,30 @@ if [ ! -d ~/.config/base16-gnome-terminal ]; then
     git clone https://github.com/chriskempson/base16-gnome-terminal.git ~/.config/base16-gnome-terminal
 
     DFCONFDIR='/org/gnome/terminal/legacy/profiles:'
-    old_profiles=($(dconf list /org/gnome/terminal/legacy/profiles:/ | egrep '^:' | sed 's/[:\/]//g'))
-    (source ~/.config/base16-gnome-terminal/base16-brewer.dark.sh)
-    new_profiles=($(dconf list /org/gnome/terminal/legacy/profiles:/ | egrep '^:' | sed 's/[:\/]//g'))
-    added_profiles=$((${#new_profiles[@]}-${#old_profiles[@]}))
+    BASE16_TERMINAL_THEME="base16-harmonic16.dark.sh"
 
-    if [ "$added_profiles" = 1 ]; then
+    old_profiles=($(dconf list "$DFCONFDIR/" | egrep '^:' | sed 's/[:\/]//g'))
+    (source ~/.config/base16-gnome-terminal/$BASE16_TERMINAL_THEME)
+    new_profiles=($(dconf list "$DFCONFDIR/" | egrep '^:' | sed 's/[:\/]//g'))
+    num_added_profiles=$((${#new_profiles[@]}-${#old_profiles[@]}))
+
+    if [ "$num_added_profiles" = 1 ]; then
         new_profile=$(echo "${old_profiles[@]} ${new_profiles[@]}" | tr ' ' '\n' | sort | uniq -u)
         profile_dir="$DFCONFDIR/:$new_profile"
         dconf write $DFCONFDIR/default "'$new_profile'"
         dconf write $profile_dir/background-transparency-percent "5"
         dconf write $profile_dir/use-transparent-background "true"
+        dconf write $profile_dir/scrollbar-policy "'never'"
         dconf write $profile_dir/font "'Source Code Pro for Powerline Regular 11'"
     fi
 fi
+
+
+echo ""
+echo "------------------------------------"
+echo "Installation of dotfiles has successfully finished!"
+echo "You can view the installation log at: $LOG_FILE"
+echo "------------------------------------"
+echo ""
+
+env zsh -l
