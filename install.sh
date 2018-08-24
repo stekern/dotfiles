@@ -50,6 +50,9 @@ else
     exit 1
 fi
 
+# Set up automatic installation of a required package
+echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
+
 if confirm "Would you like to install albert, Spotify and misc. media packages? "; then
     echo "[+] Installing albert, Spotify and misc. media packages ..."
     (
