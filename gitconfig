@@ -4,13 +4,15 @@
 
 [core]
 	editor = vim
-	whitespace = fix
 
 [alias]
 	b = branch
 	co = checkout
 	st = status
         ap = add --patch
+
+[apply]
+        whitespace = fix
 
 [push]
 	default = current
