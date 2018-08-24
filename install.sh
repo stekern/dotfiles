@@ -196,30 +196,14 @@ if [ $(which vim) == "" ]; then
     sudo ln -s /usr/bin/nvim /usr/bin/vim
 fi
 
-# Install base-16-gnome-terminal
-echo "[+] Installing base-16-gnome-terminal ..."
-if [ ! -d ~/.config/base16-gnome-terminal ]; then
-    git clone https://github.com/chriskempson/base16-gnome-terminal.git ~/.config/base16-gnome-terminal
-
-    DFCONFDIR='/org/gnome/terminal/legacy/profiles:'
-    BASE16_TERMINAL_THEME="base16-harmonic16.dark.sh"
-
-    old_profiles=($(dconf list "$DFCONFDIR/" | egrep '^:' | sed 's/[:\/]//g'))
-    (source ~/.config/base16-gnome-terminal/$BASE16_TERMINAL_THEME)
-    new_profiles=($(dconf list "$DFCONFDIR/" | egrep '^:' | sed 's/[:\/]//g'))
-    num_added_profiles=$((${#new_profiles[@]}-${#old_profiles[@]}))
-
-    if [ "$num_added_profiles" = 1 ]; then
-        new_profile=$(echo "${old_profiles[@]} ${new_profiles[@]}" | tr ' ' '\n' | sort | uniq -u)
-        profile_dir="$DFCONFDIR/:$new_profile"
-        dconf write $DFCONFDIR/default "'$new_profile'"
-        dconf write $profile_dir/background-transparency-percent "5"
-        dconf write $profile_dir/use-transparent-background "true"
-        dconf write $profile_dir/scrollbar-policy "'never'"
-        dconf write $profile_dir/font "'Source Code Pro for Powerline Regular 11'"
-    fi
-fi
-
+# Configure GNOME terminal
+echo "[+] Configuring GNOME terminal ..."
+default_profile=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'" )
+gsettings_schema="org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$default_profile/"
+gsettings set $gsettings_schema scrollbar-policy "never"
+gsettings set $gsettings_schema background-transparency-percent "5"
+gsettings set $gsettings_schema use-transparent-background "true"
+gsettings set $gsettings_schema font "Source Code Pro for Powerline Regular 11"
 
 echo ""
 echo "------------------------------------"
