@@ -53,6 +53,9 @@ fi
 if confirm "Would you like to install albert, Spotify and misc. media packages? "; then
     echo "[+] Installing albert, Spotify and misc. media packages ..."
     (
+        # Add signing keys for albert repository
+        wget -nv -O Release.key https://build.opensuse.org/projects/home:manuelschneid3r/public_key
+        sudo apt-key add - < Release.key && rm Release.key
         # Add repository for albert
         sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/manuelschneid3r/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/home:manuelschneid3r.list"
         # Add signing keys for Spotify repository
