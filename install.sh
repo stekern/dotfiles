@@ -63,7 +63,7 @@ if confirm "Would you like to install albert, Spotify and misc. media packages? 
         # Add repository for Spotify
         echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
         sudo apt update
-        sudo apt install albert spotify-client ubuntu-restricted-extras
+        sudo apt install -y albert spotify-client ubuntu-restricted-extras
         # Install necessary libraries for Spotify local files
         sudo wget -N https://github.com/ramedeiros/spotify_libraries/raw/master/libavcodec.so.54.71.100 -O /usr/lib/x86_64-linux-gnu/libavcodec.so.54 && sudo wget -N https://github.com/ramedeiros/spotify_libraries/raw/master/libavformat.so.54.36.100 -O /usr/lib/x86_64-linux-gnu/libavformat.so.54 && sudo wget -N https://github.com/ramedeiros/spotify_libraries/raw/master/libavutil.so.52.6.100 -O /usr/lib/x86_64-linux-gnu/libavutil.so.52 && sudo ldconfig
     ) &>>$LOG_FILE
@@ -71,7 +71,7 @@ fi
 
 if confirm "Would you like to install htop, tldr and tlp? "; then
     echo "[+] Installing htop, tldr and tlp ..."
-    sudo apt install htop tldr tlp &>>$LOG_FILE
+    sudo apt install -y htop tldr tlp &>>$LOG_FILE
 fi
 
 if confirm "Would you like to configure misc. ThinkPad T460 tweaks? "; then
