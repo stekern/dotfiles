@@ -1,0 +1,3 @@
+xkb_symbols "mac" {
+    key <AE04>  { [ 4, dollar, EuroSign, onequarter ] };
+};

@@ -1,0 +1,10 @@
+xkb_keycodes "k811" {
+    <LSGT> = 49; // Previously 94
+    <TLDE> = 94; // Previously 49
+    <LWIN> = 64; // Previously 133
+    <LALT> = 133; // Previously 64
+    <PRSC> = 108; // Previously 107
+    <RALT> = 134; // Previously 108
+    <I232> = 78; // Previously 232
+    <I233> = 127; // Previously 233
+};
