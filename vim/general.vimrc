@@ -20,13 +20,6 @@ nnoremap <S-Tab> <c-w>W
 
 let mapleader = ' ' " Set leader to <SPACE>
 
-" Theming
-" Use base16-shell to help with theme compatibility in vim
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
-endif
-
 " Enable terminal transparency in vim (must be set after syntax!)
 hi Normal guibg=NONE ctermbg=NONE
 

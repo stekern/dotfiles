@@ -1,3 +1,11 @@
+" === base16-vim ===
+" Use base16-shell to help with theme compatibility in vim
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
+
+
 " === ale ===
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
