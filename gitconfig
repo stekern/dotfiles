@@ -1,18 +1,18 @@
 [user]
-	name = stekern
-	email = stekern@users.noreply.github.com
+    name = stekern
+    email = stekern@users.noreply.github.com
 
 [core]
-	editor = vim
+    editor = vim
 
 [alias]
-	b = branch
-	co = checkout
-	st = status
-        ap = add --patch
+    b = branch
+    co = checkout
+    st = status
+    ap = add --patch
 
 [apply]
-        whitespace = fix
+    whitespace = fix
 
 [push]
-	default = current
+    default = current
