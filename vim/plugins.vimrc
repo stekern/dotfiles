@@ -28,8 +28,8 @@ highlight ALEWarningSign ctermbg=18 ctermfg=yellow" ctermbg is set to current co
 nnoremap <silent> <leader>fb :Buffers<CR>
 nnoremap <silent> <leader>fc :Commits<CR>
 nnoremap <silent> <leader>ff :Files<CR>
-nnoremap <silent> <leader>flb :Lines<CR>
-nnoremap <silent> <leader>fl :Ag<CR>
+nnoremap <silent> <leader>fl :Lines<CR>
+nnoremap <silent> <leader>fg :Ag<CR>
 
 " Default key bindings when opening files
 "let g:fzf_action = {
