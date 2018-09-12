@@ -1,10 +1,9 @@
 " General
 syntax on " Enable syntax
-set clipboard+=unnamedplus
 set number " Enable line numbers
 set relativenumber " Enable relative line numbers
 set ruler " Enable ruler
-"set backspace=indent,eol,start " Make backspaces better
+set backspace=indent,eol,start " Make backspaces better
 set showmatch " Show matching brackets
 set undofile " Enable undo file
 set undodir=~/.vimundo/ " Set directory to store undo history
@@ -27,7 +26,10 @@ let g:tex_flavor = 'latex' " Set default TeX flavor
 
 " Indentation
 set expandtab " Allow tabs to be replaced by whitespace characters
-set shiftwidth=4 " Set default indentation
+set shiftwidth=4 " Number of spaces to use for automatic indentation
+set tabstop=4 " Number of spaces to use when pressing <Tab>
+
+" Filetype specific
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
 autocmd Filetype scss setlocal ts=2 sw=2 expandtab
 autocmd Filetype css setlocal ts=2 sw=2 expandtab
@@ -36,7 +38,7 @@ autocmd Filetype eruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype sql setlocal ts=2 sw=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 expandtab
-
+autocmd Filetype sh setlocal ts=2 sw=2 expandtab
 
 " Leader commands
 nmap <silent> <leader>l :lopen<CR>
@@ -82,6 +84,7 @@ noremap  <buffer> <silent> j gj
 noremap  <buffer> <silent> 0 g0
 noremap  <buffer> <silent> $ g$
 
+" Configure vim sessions
 let g:session_dir = '~/.vim-sessions'
 if empty(glob(g:session_dir))
     silent exec '!mkdir' g:session_dir
@@ -89,26 +92,6 @@ endif
 exec 'nnoremap <Leader>ss :mks! ' . g:session_dir . '/'
 exec 'nnoremap <Leader>sr :so ' . g:session_dir. '/*.vim<C-D><BS><BS><BS><BS><BS>'
 
-function ToggleLexplore()
-    " Check if Lexplore has been called at some point in time
-    if exists("t:netrw_lexbufnr")
-        " Go to left-most window
-        exec 1 "wincmd w"
-        setlocal winfixwidth
-        " Check if active window is netrw
-        if bufname('%') =~ "NetrwTreeListing"
-            let t:netrw_lexbufnr = bufnr("%")
-            close
-        else
-            exec "topleft vertical ". (-g:netrw_winsize) . " new | buffer " t:netrw_lexbufnr
-            "exec "leftabove 30vsplit | buffer " t:netrw_lexbufnr
-        endif
-    else
-        Lexplore
-    endif
-endfunction
-
+" Configure netrw
 nmap <silent> <leader>e :silent Explore<CR>
-
 let g:netrw_winsize = -30
-let g:netrw_liststyle = 3 " Enable tree-style filebrowsing
