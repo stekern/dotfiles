@@ -22,17 +22,17 @@ function confirm {
 }
 
 function symlink {
-  file=$(realpath "$1")
+  file=$(realpath "$1") &>>$LOG_FILE
 
   if [ -f "$2" ]; then
     if confirm "File '$2' already exists. Rename it to '$2.$TIMESTAMP.old'? "; then
-      mv "$2" "$2.$TIMESTAMP.old"
+      mv "$2" "$2.$TIMESTAMP.old" &>>$LOG_FILE
     else
       false
     fi
   fi
 
-  [ -f "$file" ] && mkdir -p "$(dirname $2)" && sudo ln -s "$file" "$2"
+  [ -f "$file" ] && mkdir -p "$(dirname $2)" && sudo ln -s "$file" "$2" &>>$LOG_FILE
 }
 
 # Clone dotfiles repo
@@ -235,7 +235,7 @@ declare -A symlinks=(
 
 echo "[+] Setting up symbolic links ..."
 for filename in "${!symlinks[@]}"; do
-  symlink "$filename" "${symlinks[$filename]}" &>>$LOG_FILE
+  symlink "$filename" "${symlinks[$filename]}"
 done
 
 if [ "$(which vim)" == "" ]; then
