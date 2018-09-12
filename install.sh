@@ -28,7 +28,7 @@ function symlink {
     if confirm "File '$2' already exists. Rename it to '$2.$TIMESTAMP.old'? "; then
       mv "$2" "$2.$TIMESTAMP.old" &>>$LOG_FILE
     else
-      return 1
+      return 0
     fi
   fi
 
