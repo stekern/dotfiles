@@ -129,7 +129,7 @@ if confirm "Would you like to configure misc. ThinkPad T460 tweaks? "; then
     gsettings set org.gnome.desktop.peripherals.mouse natural-scroll "true"
 
     # Disable Gnome overwriting custom xkb keyboard configurations
-    gsettings set org.gnome.settings-daemon.plugins.keyboard "false"
+    gsettings set org.gnome.settings-daemon.plugins.keyboard active "false"
 
     # symlink "./thinkpad/10-trackpoint.rules" "/etc/udev/rules.d/10-trackpoint.rules"
     # xinput --set-prop "TPPS/2 IBM TrackPoint" "libinput Natural Scrolling Enabled" 1
