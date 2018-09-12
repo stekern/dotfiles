@@ -67,18 +67,6 @@ endfunction
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
 
-" === vim-template ===
-let g:email='dev@ekern.me'
-let g:user='Erlend Ekern'
-
-let g:templates_user_variables = [
-        \   ['PYTHON_VERSION', 'GetDefaultPythonVersion'],
-        \ ]
-
-function! GetDefaultPythonVersion()
-        return 3
-endfunction
-
 " === lightlight ===
 let g:lightline = {
       \ 'colorscheme': g:colors_name !~ 'light' ? 'srcery_drk' : 'Tomorrow',
@@ -91,6 +79,7 @@ let g:lightline = {
       \ },
       \ }
 set noshowmode " Hide duplicate mode under statusline
+
 
 " === deoplete ===
 let g:deoplete#enable_at_startup = 1

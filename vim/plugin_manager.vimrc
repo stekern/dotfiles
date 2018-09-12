@@ -15,7 +15,6 @@ Plug 'tpope/vim-fugitive' " Integration with git
 " Formatting and syntax
 Plug 'tpope/vim-surround'
 Plug 'w0rp/ale' " Linting, formatting and autocompletion
-Plug 'aperezdc/vim-template' " Template library for new files
 Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'editorconfig/editorconfig-vim'
 " Theming

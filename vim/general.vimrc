@@ -95,3 +95,9 @@ exec 'nnoremap <Leader>sr :so ' . g:session_dir. '/*.vim<C-D><BS><BS><BS><BS><BS
 " Configure netrw
 nmap <silent> <leader>e :silent Explore<CR>
 let g:netrw_winsize = -30
+
+" Set up templates
+augroup templates
+    autocmd BufNewFile *.sh 0r ~/dotfiles/vim/templates/template.sh
+    autocmd BufNewFile *.py 0r ~/dotfiles/vim/templates/template.py
+augroup END
