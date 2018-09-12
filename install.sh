@@ -212,7 +212,11 @@ echo "[+] Installing misc. packages from pip ..."
 # Install powerline fonts
 if [ $(ls ~/.local/share/fonts | grep 'Powerline' | wc -l) -lt 50 ]; then
   echo "[+] Installing powerline fonts ..."
-  { git clone https://github.com/powerline/fonts.git --depth=1 && cd fonts && ./install.sh && cd ..  && rm -rf fonts } &>>$LOG_FILE
+  {
+    git clone https://github.com/powerline/fonts.git --depth=1
+    cd fonts && ./install.sh
+    cd ..  && rm -rf fonts
+  } &>>$LOG_FILE
 fi
 
 # Install base16-shell and set theme
