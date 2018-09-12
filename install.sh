@@ -121,8 +121,8 @@ if confirm "Would you like to configure misc. ThinkPad T460 tweaks? "; then
     gsettings set org.gnome.desktop.background show-desktop-icons "false"
 
     # Configure nautilus
-    gsettings set org.gnome.nautilus.preferences.list-view default-zoom-level "small"
-    gsettings set org.gnome.nautilus.preferences.list-view use-tree-view "true"
+    gsettings set org.gnome.nautilus.list-view default-zoom-level "small"
+    gsettings set org.gnome.nautilus.list-view use-tree-view "true"
     gsettings set org.gnome.nautilus.preferences default-folder-viewer "list-view"
 
     # Enable natural scrolling for mouse
