@@ -7,7 +7,6 @@
 export ZSH=~/.oh-my-zsh
 ZSH_THEME="robbyrussell"
 HYPHEN_INSENSITIVE="true"
-COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="dd.mm.yyyy"
 plugins=(git vi-mode)
 source $ZSH/oh-my-zsh.sh
@@ -26,7 +25,8 @@ bindkey '^[[Z' reverse-menu-complete
 
 alias vim="nvim"
 alias day="base16_atelier-forest-light"
-alias night="base16_flat"
+alias night="base16_materia"
+alias randomtheme="ls ~/.config/base16-shell/scripts/*.sh | shuf -n 1 | xargs -i -- echo echo 'Switching to random theme: ' {}\; source {} | bash"
 
 
 ##############################
