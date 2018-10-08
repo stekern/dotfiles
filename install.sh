@@ -7,6 +7,7 @@
 #
 
 set -e
+trap ERR
 TIMESTAMP=$(date +%s)
 LOG_FILE=~/log_stekern_dotfiles_$TIMESTAMP.txt
 
@@ -98,6 +99,9 @@ if confirm "Would you like to configure misc. ThinkPad T460 tweaks? "; then
 
     # Misc. modules for tlp
     sudo apt install -y tlp-rdw acpi-call-dkms
+
+    # Only show apps in the current workspace when using <Alt><Tab>
+    gsettings set org.gnome.shell.app-switcher current-workspace-only "true"
 
     # Map <Ctrl>+Volume keys to media prev, play, next
     gsettings set org.gnome.settings-daemon.plugins.media-keys play "<Primary>AudioLowerVolume"
