@@ -3,6 +3,8 @@
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   source ~/.vimrc_background
+  " Enable terminal transparency
+  hi Normal guibg=NONE ctermbg=NONE " Enable terminal transparency
 endif
 
 

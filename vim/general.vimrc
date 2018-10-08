@@ -19,9 +19,6 @@ nnoremap <S-Tab> <c-w>W
 
 let mapleader = ' ' " Set leader to <SPACE>
 
-" Enable terminal transparency in vim (must be set after syntax!)
-hi Normal guibg=NONE ctermbg=NONE
-
 let g:tex_flavor = 'latex' " Set default TeX flavor
 
 " Indentation
