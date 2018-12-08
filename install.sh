@@ -129,6 +129,9 @@ if confirm "Would you like to configure misc. ThinkPad T460 tweaks? "; then
     gsettings set org.gnome.nautilus.list-view use-tree-view "true"
     gsettings set org.gnome.nautilus.preferences default-folder-viewer "list-view"
 
+    # Set workspace labels
+    # gsettings set org.gnome.desktop.wm.preferences workspace-names "['Misc.', 'Thesis', 'Development', 'Coursework']"
+
     # Enable natural scrolling for mouse
     gsettings set org.gnome.desktop.peripherals.mouse natural-scroll "true"
 
