@@ -13,6 +13,8 @@ call plug#begin(vim_plug_path)
 Plug 'tpope/vim-vinegar' " Thin wrapper for vim's netrw Version control
 Plug 'tpope/vim-fugitive' " Integration with git
 " Formatting and syntax
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'} " Typescript autocompletion
+Plug 'leafgarland/typescript-vim'
 Plug 'tpope/vim-surround'
 Plug 'w0rp/ale' " Linting, formatting and autocompletion
 Plug 'LaTeX-Box-Team/LaTeX-Box'

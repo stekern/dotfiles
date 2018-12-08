@@ -12,10 +12,12 @@ endif
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
 \    'python': ['pylint', 'pycodestyle', 'pydocstyle'],
-\    'javascript': ['eslint']
+\    'javascript': ['eslint', 'flow'],
+\    'typescript': ['tslint']
 \}
 let g:ale_fixers = {
-\   'javascript': ['eslint']
+\   'javascript': ['eslint'],
+\   'typescript': ['tslint', 'prettier']
 \}
 let g:ale_fix_on_save = 1
 highlight ALEError ctermbg=none cterm=underline " Highlight error position with an underscore
