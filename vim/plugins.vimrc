@@ -9,14 +9,17 @@ endif
 
 
 " === ale ===
+" let g:ale_completion_enabled = 1
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
-\    'python': ['pylint', 'pycodestyle', 'pydocstyle'],
+\    'python': ['flake8', 'pylint'],
 \    'javascript': ['eslint', 'flow'],
 \    'typescript': ['tslint']
 \}
 let g:ale_fixers = {
+\   'css': ['prettier'],
 \   'javascript': ['eslint'],
+\   'python': ['autopep8', 'yapf'],
 \   'typescript': ['tslint', 'prettier']
 \}
 let g:ale_fix_on_save = 1
