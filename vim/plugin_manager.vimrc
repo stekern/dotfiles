@@ -27,5 +27,9 @@ Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 " Fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " System-wide fuzzy finder
 Plug 'junegunn/fzf.vim'
+" Wiki
+Plug 'vimwiki/vimwiki'
+" LaTeX plugin
+Plug 'lervag/vimtex'
 
 call plug#end()
