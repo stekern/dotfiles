@@ -8,7 +8,7 @@ export ZSH=~/.oh-my-zsh
 ZSH_THEME="robbyrussell"
 HYPHEN_INSENSITIVE="true"
 HIST_STAMPS="dd.mm.yyyy"
-plugins=(git vi-mode)
+plugins=(docker git vi-mode)
 source $ZSH/oh-my-zsh.sh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 export EDITOR='vim'
