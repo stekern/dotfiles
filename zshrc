@@ -50,7 +50,7 @@ function tmux-template {
 # Set up autocomplete for tmux-template
 function _tmux_template_options {
     local -a options
-    options=("capra" "easybudget" "samf")
+    options=("capra" "easybudget" "riot" "samf" "thesis")
     _describe "values" options
 }
 compdef _tmux_template_options tmux-template
