@@ -12,6 +12,7 @@ set hlsearch " Enable search highlighting
 set autochdir
 set encoding=utf-8
 set splitright " Add new windows split to the right
+set listchars+=nbsp:_ " Show those pesky non-breaking space characters
 
 " Cycle through windows using <Tab> and <Shift-Tab>
 nnoremap <Tab> <c-w>w
