@@ -14,7 +14,7 @@ Plug 'tpope/vim-vinegar' " Thin wrapper for vim's netrw Version control
 Plug 'tpope/vim-fugitive' " Integration with git
 " Formatting and syntax
 Plug 'mhartington/nvim-typescript', {'do': './install.sh'} " Typescript autocompletion
-Plug 'leafgarland/typescript-vim'
+Plug 'HerringtonDarkholme/yats.vim' " Typescript syntax
 Plug 'tpope/vim-surround'
 Plug 'w0rp/ale' " Linting, formatting and autocompletion
 Plug 'LaTeX-Box-Team/LaTeX-Box'
@@ -23,10 +23,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'chriskempson/base16-vim' " Base16 themes for vim
 Plug 'itchyny/lightline.vim' " Lightweight statusline
 " Autocomplete
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " Async autocomplete
-Plug 'Shougo/neco-syntax' " Multiple language syntax completion for deoplete
-Plug 'zchee/deoplete-jedi' " Python source for deoplete
-Plug 'wokalski/autocomplete-flow' " Javascript source for deoplete
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 " Fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " System-wide fuzzy finder
 Plug 'junegunn/fzf.vim'
