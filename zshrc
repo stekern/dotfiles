@@ -142,3 +142,6 @@ export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 pyenv virtualenvwrapper_lazy
+
+# Needs to be done after pyenv setup, as it is as python package
+eval $(thefuck --alias)
