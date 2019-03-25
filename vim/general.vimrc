@@ -9,10 +9,12 @@ set undofile " Enable undo file
 set undodir=~/.vimundo/ " Set directory to store undo history
 set incsearch " Show the next match while entering a search
 set hlsearch " Enable search highlighting
-set autochdir
 set encoding=utf-8
 set splitright " Add new windows split to the right
 set listchars+=nbsp:_ " Show those pesky non-breaking space characters
+"set autochdir
+" If autochdir is set, frequent 'Error detected while processing DirChanged Autocommands for *' appears when using fzf
+" So lets keep it commented out for now
 
 " Cycle through windows using <Tab> and <Shift-Tab>
 nnoremap <Tab> <c-w>w
