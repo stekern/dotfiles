@@ -27,6 +27,7 @@ alias vim="nvim"
 alias day="base16_atelier-forest-light"
 alias night="base16_materia"
 alias randomtheme="ls ~/.config/base16-shell/scripts/*.sh | shuf -n 1 | xargs -i -- echo echo 'Switching to random theme: ' {}\; source {} | bash"
+alias killp="bash ~/Documents/GitHub/Scripts/scripts/killp/killp.sh"
 
 
 ##############################
