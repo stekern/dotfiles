@@ -113,7 +113,7 @@ fi
 
 # Configure fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag --hidden --ignore-dir={.cache,.git,node_modules} -g'
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore-dir={.cache,.git,node_modules} -g ""'
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
 
 
