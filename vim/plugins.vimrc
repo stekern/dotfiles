@@ -39,10 +39,9 @@ nnoremap <silent> <leader>fl :Lines<CR>
 nnoremap <silent> <leader>fg :Ag<CR>
 
 " Default key bindings when opening files
-"let g:fzf_action = {
-"  \ 'enter': 'tab split',
-"  \ 'ctrl-x': 'split',
-"  \ 'ctrl-v': 'vsplit' }
+let g:fzf_action =
+\ { 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
 let g:fzf_layout = { 'down': '~40%' } " Default layout of the search window
 
 " Customize fzf colors to match color scheme
