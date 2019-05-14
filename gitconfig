@@ -8,6 +8,9 @@
 [alias]
     b = branch
     co = checkout
+    cob = checkout -b
+    cm = commit -m
+    cma = commit --amend
     st = status
     ap = add --patch
 
