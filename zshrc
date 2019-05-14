@@ -9,6 +9,7 @@ ZSH_THEME="robbyrussell"
 HYPHEN_INSENSITIVE="true"
 HIST_STAMPS="dd.mm.yyyy"
 plugins=(docker git vi-mode)
+setopt correct
 source $ZSH/oh-my-zsh.sh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 export EDITOR='vim'
