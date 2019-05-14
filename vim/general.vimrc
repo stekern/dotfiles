@@ -50,6 +50,7 @@ nmap <silent> <leader>r :call GetDefaultRunCommand()<CR>
 function! GetDefaultRunCommand()
     let l:run_commands = {
         \ 'perl': 'perl',
+        \ 'sh': 'bash',
         \ 'python': 'python',
         \ 'tex': 'pdflatex',
         \}
