@@ -157,8 +157,9 @@ echo "[+] Installing neovim (+silversearcher-ag), tmux (+xclip) and zsh ..."
 
 # Install oh-my-zsh
 if [ ! -d ~/.oh-my-zsh ]; then
-  echo "[+] Installing oh-my-zsh ..."
+  echo "[+] Installing oh-my-zsh and custom plugins ..."
   bash -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sed -r 's/(^\s*)(env zsh -l)(\s*$)/\1#\2\3/g' | sed -r 's/(^\s*)(chsh -s .*)(\s*)$/\1#\2\3/g')" &>>$LOG_FILE
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
   chsh -s $(which zsh) 2>&1 | tee -a $LOG_FILE
 fi
 
