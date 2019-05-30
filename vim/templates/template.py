@@ -1,10 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# vim:fenc=utf-8
 #
-# Copyright (C) 2019 Erlend Ekern <dev@ekern.me>
+# Copyright (C) {{YEAR}} {{NAME}} <{{EMAIL}}>
 #
-# Distributed under terms of the MIT license.
+# Distributed under terms of the {{LICENSE}} license.
 
 """
 
