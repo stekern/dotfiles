@@ -101,8 +101,21 @@ exec 'nnoremap <Leader>sr :so ' . g:session_dir. '/*.vim<C-D><BS><BS><BS><BS><BS
 nmap <silent> <leader>e :silent Explore<CR>
 let g:netrw_winsize = -30
 
+" Function for filling in templates
+function! FillTemplate()
+    let template_fields = {
+        \ 'EMAIL': 'dev@ekern.me',
+        \ 'LICENSE': 'MIT',
+        \ 'NAME': 'Erlend Ekern',
+        \ 'YEAR': strftime('%Y'),
+        \}
+    for [field, value] in items(template_fields)
+        exe "silent! %s/{{" . field . "}}/" . value
+    endfor
+    exe "normal G"
+endfunction
+
 " Set up templates
 augroup templates
-    autocmd BufNewFile *.sh 0r ~/dotfiles/vim/templates/template.sh
-    autocmd BufNewFile *.py 0r ~/dotfiles/vim/templates/template.py
+    autocmd BufNewFile * silent! 0r ~/dotfiles/vim/templates/template.%:e | call FillTemplate()
 augroup END
