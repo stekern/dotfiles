@@ -105,6 +105,10 @@ exec 'nnoremap <Leader>sr :so ' . g:session_dir. '/*.vim<C-D><BS><BS><BS><BS><BS
 nmap <silent> <leader>e :silent Explore<CR>
 let g:netrw_winsize = -30
 
+" Enable italics
+hi Comment gui=italic cterm=italic
+hi htmlArg gui=italic cterm=italic
+
 " Function for filling in templates
 function! FillTemplate()
     let template_fields = {
