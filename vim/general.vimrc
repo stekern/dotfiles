@@ -17,10 +17,6 @@ set list " Turn on list mode to display characters set in listchars
 " If autochdir is set, frequent 'Error detected while processing DirChanged Autocommands for *' appears when using fzf
 " So lets keep it commented out for now
 
-" Cycle through windows using <Tab> and <Shift-Tab>
-nnoremap <Tab> <c-w>w
-nnoremap <S-Tab> <c-w>W
-
 let mapleader = ' ' " Set leader to <SPACE>
 
 let g:tex_flavor = 'latex' " Set default TeX flavor
@@ -40,8 +36,15 @@ autocmd Filetype sql setlocal ts=2 sw=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 expandtab
 autocmd Filetype sh setlocal ts=2 sw=2 expandtab
+autocmd Filetype zsh setlocal ts=2 sw=2 expandtab
 autocmd Filetype yaml setlocal ts=2 sw=2 expandtab
 autocmd Filetype typescript setlocal ts=2 sw=2 expandtab
+autocmd Filetype vimwiki setlocal ts=2 sw=2 expandtab nofoldenable
+autocmd Filetype vue setlocal ts=2 sw=2 expandtab
+
+autocmd Filetype python setlocal foldnestmax=2 foldmethod=indent
+autocmd Filetype sh setlocal ts=2 sw=2 foldnestmax=2 foldmethod=indent
+
 
 autocmd BufNewFile,BufRead *.tsx set filetype=typescript
 
