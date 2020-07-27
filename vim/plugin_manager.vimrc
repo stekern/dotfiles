@@ -29,6 +29,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " System-wide 
 Plug 'junegunn/fzf.vim'
 " Wiki
 Plug 'vimwiki/vimwiki'
+" Writing-oriented
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 " LaTeX plugin
 Plug 'lervag/vimtex'
 

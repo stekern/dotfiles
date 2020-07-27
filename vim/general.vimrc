@@ -48,8 +48,12 @@ autocmd Filetype sh setlocal ts=2 sw=2 foldnestmax=2 foldmethod=indent
 
 autocmd BufNewFile,BufRead *.tsx set filetype=typescript
 
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
 " Leader commands
 nmap <silent> <leader>l :lopen<CR>
+nnoremap <silent> <leader>z :Goyo<CR>
 nmap <silent> <leader>r :call GetDefaultRunCommand()<CR>
 function! GetDefaultRunCommand()
     let l:run_commands = {
