@@ -1,0 +1,8 @@
+export SAVEHIST=100000
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+export HISTFILE=~/.zhistory
+
+export PS1="%B%n:%1d%b "
+
+setopt sharehistory
