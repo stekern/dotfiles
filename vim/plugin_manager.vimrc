@@ -13,17 +13,18 @@ call plug#begin(vim_plug_path)
 Plug 'tpope/vim-vinegar' " Thin wrapper for vim's netrw Version control
 Plug 'tpope/vim-fugitive' " Integration with git
 " Formatting and syntax
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'} " Typescript autocompletion
-Plug 'HerringtonDarkholme/yats.vim' " Typescript syntax
+" Plug 'mhartington/nvim-typescript', {'do': './install.sh'} " Typescript autocompletion
+" Plug 'HerringtonDarkholme/yats.vim' " Typescript syntax
+Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
-Plug 'w0rp/ale' " Linting, formatting and autocompletion
-Plug 'LaTeX-Box-Team/LaTeX-Box'
+" Plug 'w0rp/ale' " Linting, formatting and autocompletion
+" Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'editorconfig/editorconfig-vim'
 " Theming
 Plug 'chriskempson/base16-vim' " Base16 themes for vim
 Plug 'itchyny/lightline.vim' " Lightweight statusline
 " Autocomplete
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " System-wide fuzzy finder
 Plug 'junegunn/fzf.vim'
@@ -32,7 +33,10 @@ Plug 'vimwiki/vimwiki'
 " Writing-oriented
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'masukomi/vim-markdown-folding'
+" Vim + tmux integration
+Plug 'christoomey/vim-tmux-navigator'
 " LaTeX plugin
-Plug 'lervag/vimtex'
+" Plug 'lervag/vimtex'
 
 call plug#end()

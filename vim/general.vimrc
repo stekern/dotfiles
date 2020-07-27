@@ -87,10 +87,6 @@ map <right> <nop>
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
-" Change tabs using H and L
-nnoremap H gT
-nnoremap L gt
-
 " Move display lines instead of logical
 noremap  <buffer> <silent> k gk
 noremap  <buffer> <silent> j gj
