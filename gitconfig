@@ -9,6 +9,8 @@
     b = branch
     co = checkout
     cob = checkout -b
+    c = commit
+    cv = commit -v
     cm = commit -m
     cma = commit --amend
     st = status
