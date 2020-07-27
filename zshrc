@@ -25,10 +25,14 @@ bindkey '^[[Z' reverse-menu-complete
 ##############################
 
 alias vim="nvim"
+# Nice dark themes: base16_google-dark, base16_materia, base16_material-darker, base16_material-vivid, base16_outrun-dark, base16_phd, base16_snazzy, base16_solarflare,
 alias day="base16_atelier-forest-light"
-alias night="base16_materia"
+alias night="base16_material-vivid"
 alias randomtheme="ls ~/.config/base16-shell/scripts/*.sh | shuf -n 1 | xargs -i -- echo echo 'Switching to random theme: ' {}\; source {} | bash"
+alias cyclefavoritethemes="while 1; do echo gruvbox-dark-pale gruvbox-dark-medium gruvbox-dark-hard google-dark materia material material-darker material-vivid outrun-dark phd snazzy solarflare | xargs -n1 | grep -v $(echo BASE16_SHELL | sed s/^base16//g) | shuf -n1 | xargs -I{} echo echo Theme: {}\; source ~/.config/base16-shell/scripts/base16-{}.sh | bash; sleep 2; done"
 alias killp="bash ~/Documents/GitHub/Scripts/scripts/killp/killp.sh"
+alias kssh="kitty +kitten ssh"
+alias aws2="/usr/local/bin/aws"
 
 
 ##############################
@@ -36,12 +40,50 @@ alias killp="bash ~/Documents/GitHub/Scripts/scripts/killp/killp.sh"
 # CUSTOM FUNCTIONS           #
 #                            #
 ##############################
+#
+function p2r {
+  local input="$1"
+  shift
+  if [[ "$input" =~ ^http ]]; then
+    docker run --rm -v "${HOME}/.rmapi:/home/user/.rmapi:rw" p2r "$input" "$@" --verbose
+  else
+    if [[ "$input" =~ ^.*\.pdf$ ]] && [ -e "$input" ]; then
+      local file="$(basename "$input")"
+      docker run --rm -v "${HOME}/.rmapi:/home/user/.rmapi:rw" -v "$input:/pdfs/$file" p2r "/pdfs/$file" "$@" --verbose
+    fi
+  fi
+}
 
 # Create and go to dir
 function mkcdir {
     mkdir -p -- "$1" &&
         cd -P -- "$1"
 }
+
+function subdirsize {
+    du -d 1 "$1" | sort -nr | while IFS= read line; do size="$(echo $line | cut -f1)"; folder="$(echo $line | cut -f2)"; gb="$(echo 'scale=4;'$size/1024^2 | bc)"; echo "$gb GB $folder"; done
+}
+
+function bash-utils {
+  local util_name="$1"
+  shift
+  local dir="$HOME/Documents/GitHub/Scripts/scripts/bash-utils"
+  local script="$dir/$util_name.sh"
+  test -e "$script" && bash "$script" "$@"
+}
+
+function _bash_utils_options() {
+  local options=($(find "$HOME/Documents/GitHub/Scripts/scripts/bash-utils" -name "*.sh" \
+    | sed -n 's/^.*\/\(.*\)\.sh$/\1/p' \
+    | sort
+  ))
+  _describe "values" options
+}
+
+if type compdef >/dev/null 2>/dev/null; then
+    compdef _bash_utils_options bash-utils
+fi
+
 
 # Wrap tmux-template script in a function for compatibility with autocompletion
 function tmux-template {
