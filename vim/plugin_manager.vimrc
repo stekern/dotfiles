@@ -12,6 +12,7 @@ call plug#begin(vim_plug_path)
 " File explorer
 Plug 'tpope/vim-vinegar' " Thin wrapper for vim's netrw Version control
 Plug 'tpope/vim-fugitive' " Integration with git
+Plug 'idanarye/vim-merginal'
 " Formatting and syntax
 " Plug 'mhartington/nvim-typescript', {'do': './install.sh'} " Typescript autocompletion
 " Plug 'HerringtonDarkholme/yats.vim' " Typescript syntax
