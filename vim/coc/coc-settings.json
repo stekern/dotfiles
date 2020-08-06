@@ -1,6 +1,6 @@
 {
   "eslint.options":{
-    "configFile": "/home/erlend/dotfiles/vim/coc/.eslintrc"
+    "configFile": "/Users/erlend/dotfiles/vim/coc/.eslintrc"
   },
   "eslint.autoFixOnSave": true,
 

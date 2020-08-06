@@ -115,7 +115,7 @@ set completeopt-=preview " Disable preview window
 
 
 " === vimwiki ===
-let g:vimwiki_list = [{'path': '/media/veracrypt1/syncthing/vimwiki',
+let g:vimwiki_list = [{'path': '/Users/erlend/syncthing/vimwiki',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_folding = 'expr'
 
