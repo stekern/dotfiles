@@ -53,7 +53,7 @@ autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
 " Leader commands
-nmap <silent> <leader>l :lopen<CR>
+nmap <silent> <leader>l :CocDiagnostics<CR>
 nnoremap <silent> <leader>z :Goyo<CR>
 nmap <silent> <leader>r :call GetDefaultRunCommand()<CR>
 function! GetDefaultRunCommand()
