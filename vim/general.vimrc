@@ -13,6 +13,7 @@ set encoding=utf-8
 set splitright " Add new windows split to the right
 set listchars=tab:»\ ,nbsp:␣,trail:·
 set list " Turn on list mode to display characters set in listchars
+set clipboard^=unnamed,unnamedplus
 "set autochdir
 " If autochdir is set, frequent 'Error detected while processing DirChanged Autocommands for *' appears when using fzf
 " So lets keep it commented out for now
