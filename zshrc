@@ -10,6 +10,17 @@ setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt HIST_REDUCE_BLANKS
+setopt PROMPT_SUBST
+
+
+# ====== Prompt ======
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+zstyle ':vcs_info:git:*' formats ' %F{242}[%b]%f'
+zstyle ':vcs_info:*' enable git
+PS1="🦄 %B%F{%(?.blue.red)}%1~%f%b\$vcs_info_msg_0_ "
+
 
 # ====== Completion ======
 autoload -Uz compinit && compinit
