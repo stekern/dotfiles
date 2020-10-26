@@ -58,6 +58,7 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 
 # === Miscellaneous ===
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH="$HOME/bin:$PATH"
 
 
 # === Version managers ===
