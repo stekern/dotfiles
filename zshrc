@@ -46,6 +46,7 @@ alias vim="/usr/local/bin/nvim"
 alias tmux="tmux -u"
 alias la="ls -la"
 alias ll="ls -l"
+alias git-root='cd "$(git rev-parse --show-toplevel)"'
 
 
 # === Theming ===
