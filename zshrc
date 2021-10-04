@@ -36,6 +36,10 @@ bindkey '^[[Z' reverse-menu-complete
 autoload -U select-word-style
 select-word-style bash
 
+# ========= aws =========
+autoload bashcompinit && bashcompinit
+complete -C '/usr/local/aws/bin/aws_completer' aws
+
 export HISTFILE=~/.zhistory # History file
 export EDITOR="nvim"
 
