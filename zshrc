@@ -69,6 +69,10 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export PATH="$HOME/bin:$PATH"
 
+# ====== go ======
+export GOPATH="$HOME/go"
+export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
+
 
 # === Version managers ===
 
@@ -85,3 +89,7 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi
 # pyenv-virtualenv
 eval "$(pyenv virtualenv-init -)"
+
+# ====== sdkman ======
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
