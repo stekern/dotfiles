@@ -43,7 +43,10 @@ complete -C '/usr/local/aws/bin/aws_completer' aws
 export HISTFILE=~/.zhistory # History file
 export EDITOR="nvim"
 
-bindkey -v # Vi-mode
+if [ -z "$INSIDE_EMACS" ]; then
+  # Only enable vi-mode if not inside emacs
+  bindkey -v # Vi-mode
+fi
 
 
 # === Aliases ===
