@@ -20,7 +20,7 @@ precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 zstyle ':vcs_info:git:*' formats ' %F{242}[%b]%f'
 zstyle ':vcs_info:*' enable git
-PS1="🦄 %B%F{%(?.blue.red)}%1~%f%b\$vcs_info_msg_0_ "
+PROMPT='🦄 %B%F{%(?.blue.red)}%1~%f%b$vcs_info_msg_0_$(if [ -n "${AWS_VAULT:-}" ]; then echo -e " \033[0;33m(🔓 $AWS_VAULT)\e[0m"; fi) '
 
 
 # ====== Completion ======
