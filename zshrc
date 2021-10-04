@@ -51,6 +51,7 @@ fi
 
 # === Aliases ===
 alias vim="/usr/local/bin/nvim"
+alias aws2="$HOME/bin/aws-cli/aws"
 alias tmux="tmux -u"
 alias la="ls -la"
 alias ll="ls -l"
