@@ -11,6 +11,7 @@ setopt HIST_IGNORE_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt PROMPT_SUBST
+setopt AUTO_PUSHD
 
 
 # ====== Prompt ======
