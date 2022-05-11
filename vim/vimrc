@@ -1,6 +1,0 @@
-" Set up plugin manager
-source ~/dotfiles/vim/plugin_manager.vimrc
-" Configure general vim settings
-source ~/dotfiles/vim/general.vimrc
-" Configure plugins
-source ~/dotfiles/vim/plugin_configs.vimrc
