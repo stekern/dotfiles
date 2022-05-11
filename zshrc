@@ -20,11 +20,21 @@ precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 zstyle ':vcs_info:git:*' formats ' %F{242}[%b]%f'
 zstyle ':vcs_info:*' enable git
-PROMPT='🦄 %B%F{%(?.blue.red)}%1~%f%b$vcs_info_msg_0_$(if [ -n "${AWS_VAULT:-}" ]; then echo -e " \033[0;33m(🔓 $AWS_VAULT)\e[0m"; fi) '
+PROMPT='🦄 %B%F{%(?.blue.red)}%1~%f%b$vcs_info_msg_0_%F{yellow}$(aws_vault_prompt_info)%F{default} '
 
+aws_vault_prompt_info() {
+  local symbol="🔓"
+  if [ -n "${AWS_VAULT:-}" ]; then
+    if [ -n "${AWS_SESSION_EXPIRATION:-}" ] && [[ "$AWS_SESSION_EXPIRATION" < "$(date -u +%FT%TZ)" ]]; then
+      symbol="💀"
+    fi
+    echo " ($symbol $AWS_VAULT)"
+  fi
+}
 
 # ====== Completion ======
-autoload -Uz compinit && compinit
+# Colors for directories, ls, cd, etc.
+zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30' && export CLICOLOR=1
 # Case-insensitive completion
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 # Partial completion suggestions
@@ -35,27 +45,28 @@ zstyle ':completion:*' menu select
 bindkey '^[[Z' reverse-menu-complete
 autoload -U select-word-style
 select-word-style bash
-
-# ========= aws =========
+# Support bash completions
 autoload bashcompinit && bashcompinit
-complete -C '/usr/local/aws/bin/aws_completer' aws
+autoload -Uz compinit && compinit
+# shell completion for homebrew (https://docs.brew.sh/Shell-Completion)
+if type brew &>/dev/null; then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+  autoload -Uz compinit
+  compinit
+fi
 
 export HISTFILE=~/.zhistory # History file
 export EDITOR="nvim"
 
-if [ -z "$INSIDE_EMACS" ]; then
-  # Only enable vi-mode if not inside emacs
-  bindkey -v # Vi-mode
-fi
-
 
 # === Aliases ===
-alias vim="/usr/local/bin/nvim"
-alias aws2="$HOME/bin/aws-cli/aws"
+alias vim="$(brew --prefix neovim)/bin/nvim"
+alias aws1="$(brew --prefix awscli@1)/bin/aws"
 alias tmux="tmux -u"
 alias la="ls -la"
 alias ll="ls -l"
 alias git-root='cd "$(git rev-parse --show-toplevel)"'
+alias mkcdir='cd "$(mktemp -d)"'
 
 
 # === Theming ===
@@ -64,32 +75,9 @@ alias git-root='cd "$(git rev-parse --show-toplevel)"'
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
+source /opt/homebrew/opt/asdf/libexec/asdf.sh
 
-# === Miscellaneous ===
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH="$HOME/bin:$PATH"
-
-# ====== go ======
-export GOPATH="$HOME/go"
-export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 
 
-# === Version managers ===
-
-# ====== nvm ======
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-# ====== tfenv ======
-export PATH="$HOME/.tfenv/bin:$PATH"
-
-# ====== pyenv ======
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi
-# pyenv-virtualenv
-eval "$(pyenv virtualenv-init -)"
-
-# ====== sdkman ======
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+export PATH="$PATH:$HOME/bin"
