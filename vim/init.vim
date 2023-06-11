@@ -15,7 +15,8 @@ Plug 'tpope/vim-vinegar' " Thin wrapper for vim's built-in netrw explorer
 " Syntax
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Theming
-Plug 'RRethy/nvim-base16' " base16 themes with treesitter support that can be used as a replacement for chriskempson/base16-vim. Seems to work well together with base16-shell as well.
+Plug 'RRethy/nvim-base16' " Base16 themes with treesitter support
+
 " Vim + tmux integration
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-surround' " Easy to make changes to brackets, parentheses, etc.
@@ -38,12 +39,15 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-path' " Completion source for local paths
 Plug 'hrsh7th/cmp-buffer' " Completion source for buffer words
 Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 Plug 'saadparwaiz1/cmp_luasnip' " 
 " Snippets
 Plug 'L3MON4D3/LuaSnip' " Snippet engine
 
 Plug 'jose-elias-alvarez/null-ls.nvim' " Useful for extending LSP functionality (e.g., for formatting)
 Plug 'navarasu/onedark.nvim'
+
+Plug 'folke/zen-mode.nvim' " Distraction-free writing
 
 call plug#end()
 
@@ -61,6 +65,7 @@ set clipboard=unnamed
 let mapleader = ' ' " Set leader to <SPACE>
 
 syntax on
+
 
 " Indentation
 set expandtab " Allow tabs to be replaced by whitespace characters
