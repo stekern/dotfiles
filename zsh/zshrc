@@ -81,7 +81,7 @@ zle -N zle-line-init set-cursor
 zle -N zle-keymap-select set-cursor
 
 # === Aliases ===
-alias vim="NVIM_APPNAME=nvim-ks $(brew --prefix neovim)/bin/nvim" # TODO
+alias vim="nvim"
 alias tmux="tmux -u"
 alias la="ls -la"
 alias ll="ls -l"
