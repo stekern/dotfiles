@@ -1,0 +1,28 @@
+[user]
+    name = stekern
+    email = stekern@users.noreply.github.com
+
+[core]
+    editor = nvim
+
+[alias]
+    b = branch
+    co = checkout
+    cob = checkout -b
+    c = commit
+    cv = commit -v
+    cm = commit -m
+    cma = commit --amend
+    dc = diff --cached
+    st = status
+    ap = add --patch
+    pushf = push --force-with-lease
+    who = shortlog -sn --no-merges HEAD
+    churn = git log --format='' --name-only --diff-filter=AM --since='1 year ago' | sort | uniq -c | sort -nr | head -20
+
+[push]
+    autoSetupRemote = true
+    useForceIfIncludes = true
+
+[include]
+    path = ~/dotfiles/local/git/gitconfig.local
