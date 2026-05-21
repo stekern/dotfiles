@@ -192,13 +192,3 @@ end)
 hyper:bind(nil, "o", function()
 	spaceMover.moveRight()
 end)
-
--- Keybinding for focusing Firefox frame (e.g,, for Vimium compatibility etc.)
--- NOTE: Did not see much actual use, keeping it commented out for now
--- hyper:bind(nil, "c", function()
--- 	local frontmostApplication = hs.application.frontmostApplication()
--- 	if frontmostApplication and frontmostApplication:name() == "Firefox" then
--- 		hs.eventtap.keyStroke("cmd", "f", 10)
--- 		hs.eventtap.keyStroke("esc", nil, 10)
--- 	end
--- end)

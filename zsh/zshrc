@@ -11,6 +11,7 @@ setopt HIST_IGNORE_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt HIST_IGNORE_SPACE
+export HISTFILE=~/.zhistory
 setopt PROMPT_SUBST
 setopt AUTO_PUSHD
 
@@ -57,14 +58,11 @@ autoload bashcompinit && bashcompinit
 # shell completion for homebrew (https://docs.brew.sh/Shell-Completion)
 if type brew &>/dev/null; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-  autoload -Uz compinit
-  compinit
 fi
 
 autoload -Uz compinit && compinit
 
 
-export HISTFILE=~/.zhistory # History file
 
 # ====== Editing ======
 bindkey -v

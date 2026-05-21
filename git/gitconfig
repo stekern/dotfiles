@@ -18,7 +18,7 @@
     ap = add --patch
     pushf = push --force-with-lease
     who = shortlog -sn --no-merges HEAD
-    churn = git log --format='' --name-only --diff-filter=AM --since='1 year ago' | sort | uniq -c | sort -nr | head -20
+    churn = !git log --format='' --name-only --diff-filter=AM --since='1 year ago' | sort | uniq -c | sort -nr | head -20
 
 [push]
     autoSetupRemote = true

@@ -173,13 +173,6 @@ end
 --- })
 --- ```
 function obj:bindHotkeys(modal, mapping)
-  hs.inspect(mapping)
-  print("Bind Hotkeys for Miro's Windows Manager")
-  if getmetatable(modal) == hs.hotkey.modal then
-    print("is modal")
-  else
-    print("is not modal")
-  end
 
   modal:bind(mapping.down[1], mapping.down[2], function ()
     self._pressed.down = true
