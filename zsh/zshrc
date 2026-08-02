@@ -114,6 +114,8 @@ toggle-theme() {
 }
 
 export ASDF_DATA_DIR="$HOME/.asdf"
+
+export PATH="$HOME/.emacs.d/bin:$PATH"
 asdf() {
   case $1 in
     "shell")
