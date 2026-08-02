@@ -113,8 +113,21 @@ toggle-theme() {
   fi
 }
 
-source /opt/homebrew/opt/asdf/libexec/asdf.sh
 export ASDF_DATA_DIR="$HOME/.asdf"
+asdf() {
+  case $1 in
+    "shell")
+      if ! shift; then
+        printf '%s\n' 'asdf: Error: Failed to shift' >&2
+        return 1
+      fi
+      eval "$(command asdf export-shell-version sh "$@")"
+    ;;
+    *)
+      command asdf "$@"
+    ;;
+  esac
+}
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
