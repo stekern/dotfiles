@@ -194,3 +194,4 @@ _aws_sso_login() {
 }
 
 test -f "$HOME/dotfiles/local/zsh/zshrc.local" && source "$HOME/dotfiles/local/zsh/zshrc.local"
+test -f "$HOME/dotfiles/local/zsh/zshrc.work" && source "$HOME/dotfiles/local/zsh/zshrc.work"

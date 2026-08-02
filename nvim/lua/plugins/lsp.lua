@@ -110,6 +110,8 @@ return {
               schemas = {
                 ['https://json.schemastore.org/pulumi.json'] = 'Pulumi.{yml,yaml}',
                 ['https://json.schemastore.org/renovate.json'] = 'renovate.{json,json5}',
+                ['https://json.schemastore.org/github-workflow.json'] = '.github/workflows/*.{yml,yaml}',
+                ['https://json.schemastore.org/github-action.json'] = '.github/actions/*/action.{yml,yaml}',
               },
             },
           },
