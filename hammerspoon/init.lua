@@ -1,9 +1,50 @@
 -- A global variable for the Hyper Mode
 hyper = hs.hotkey.modal.new({}, "F17")
 
+-- NOTE: macOS sometimes leaves secure event input held after an unlock
+-- (usually by loginwindow). While it's held, modifier-less hotkeys never fire, so hyper mode
+-- does nothing at all -- no errors, and reloading doesn't help. Only a
+-- lock/unlock or logout clears it. Checked on every hyper press, since that's
+-- when it's noticeable. A browser or terminal holding it while a password field
+-- is focused is normal and clears on its own.
+local holderCache = { at = 0, who = nil }
+local lastWarned = 0
+
+local function secureInputHolder()
+	local now = hs.timer.secondsSinceEpoch()
+	if holderCache.who and now - holderCache.at < 15 then
+		return holderCache.who -- ioreg is slow; don't run it per keypress
+	end
+	local out = hs.execute("ioreg -l -w 0 | grep -o 'kCGSSessionSecureInputPID\"=[0-9]*' | head -1")
+	local pid = tostring(out or ""):match("=(%d+)")
+	local who = "an unknown process"
+	if pid and pid ~= "0" then
+		local info = hs.execute("lsappinfo info -only name " .. pid)
+		who = string.format("%s (pid %s)", tostring(info or ""):match('"LSDisplayName"="([^"]+)"') or "unknown", pid)
+	end
+	holderCache = { at = now, who = who }
+	return who
+end
+
+local function warnIfSecureInput()
+	if not hs.eventtap.isSecureInputEnabled() then
+		return false
+	end
+	local now = hs.timer.secondsSinceEpoch()
+	if now - lastWarned < 3 then -- don't stack alerts while mashing keys
+		return true
+	end
+	lastWarned = now
+	local who = secureInputHolder()
+	print("[secure-input] HELD by " .. who .. " -- hyper keys will not fire")
+	hs.alert.show("MacOS secure input held by " .. who .. "\nHyper keys dead - lock & unlock the screen", 4)
+	return true
+end
+
 -- Enter Hyper Mode when F18 (Hyper/Capslock) is pressed
 function enterHyperMode()
 	hyper.triggered = false
+	warnIfSecureInput()
 	hyper:enter()
 end
 
@@ -177,10 +218,10 @@ end)
 hyper:bind(nil, "g", function()
 	hyper.triggered = true
 	local miroGrid = spoon.MiroWindowsManager.GRID
-	hs.grid.setGrid('6x4')
-	hs.grid.setMargins({0, 0})
+	hs.grid.setGrid("6x4")
+	hs.grid.setMargins({ 0, 0 })
 	hs.grid.show(function()
-		hs.grid.setGrid(miroGrid.w .. 'x' .. miroGrid.h)
+		hs.grid.setGrid(miroGrid.w .. "x" .. miroGrid.h)
 		hs.grid.MARGINX = 0
 		hs.grid.MARGINY = 0
 	end)
