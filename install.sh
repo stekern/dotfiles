@@ -26,7 +26,7 @@ link "$DOTFILES_DIR/zsh/zshrc"       "$HOME/.zshrc"
 link "$DOTFILES_DIR/git/gitconfig"   "$HOME/.gitconfig"
 link "$DOTFILES_DIR/tmux/tmux.conf"  "$HOME/.tmux.conf"
 link "$DOTFILES_DIR/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
-link "$DOTFILES_DIR/karabiner"       "$HOME/.config/karabiner"
+link "$DOTFILES_DIR/karabiner/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
 link "$DOTFILES_DIR/hammerspoon"     "$HOME/.hammerspoon"
 link "$DOTFILES_DIR/nvim"            "$HOME/.config/nvim"
 
