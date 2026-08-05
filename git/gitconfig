@@ -26,4 +26,3 @@
 
 [include]
     path = ~/dotfiles/local/git/gitconfig.local
-    path = ~/dotfiles/local/git/gitconfig.work
